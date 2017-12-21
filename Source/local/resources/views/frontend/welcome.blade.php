@@ -9,11 +9,11 @@
 @include('include.header')
 
     <!--  header-->
-	   
+
      <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/datetimepicker/DateTimePicker.css')}}" />
-	 
-    <!-- Banner -->  
-		 
+
+    <!-- Banner -->
+
     <div class="banner_bnr">
         <div id="slider" class="slider-container">
             <ul class="slider">
@@ -45,7 +45,7 @@
                 </ul>
             </div>
         </div>
-            
+
         <div class="container">
             <div class="row">
 				<div class="col-md-8"></div>
@@ -56,12 +56,12 @@
 								<div class="hm_registation_inr">
 									<h2 class="form-head">Registration</h2>
 									<p class="search-para">Search for a singles in your area now absolutelly FREE.</p>
-									<form role="form" class="search-form"  id="registration" >
+									<form  method="post" class="search-form"  id="registration" >
 										<ul class="horrizontal-form">
 											<li>I'm a</li>
 											<li class="gender-img"><a href="#"><img id="male_image"  onclick="add_male(); remove_female()"   alt="male" src="{{asset('assets/images/male.gif')}}"/></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="#"><img id="female_image"  alt="female"  onclick="add_female(); remove_male()" src="{{asset('assets/images/female.gif')}}"/></a></li>
 										</ul>
-										<input type="hidden" id="gendr" value="" name="gender" required> 
+										<input type="hidden" id="gendr" value="" name="gender" required>
 										<input type="hidden" name="random_id" value="" id="randid">
 										<input type="text" id="username" class="field" name="username" placeholder="Username">
 										<input type="password" id="password" class="field" name="password" placeholder="Password">
@@ -71,9 +71,9 @@
 										<div class="row">
 											<div class="col-sm-5">
 												<input type="submit" name="submit" class="reg_frnt_btn reg-field" id="reg" value="REGISTER" onClick="randomString();">
-												<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />     
+												<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
 											</div>
-									</form> 
+									</form>
 									<?php
 									$search_enable=\DB::table('settings')
 										->get();
@@ -94,7 +94,9 @@
 									}
 									?>
 										</div>
-										<div class="message"></div>
+										<div class="message">
+                        {{ $message }}
+                    </div>
 										<div class="loader1" >
 											<img src="{{asset('assets/images/ajax-loader.gif')}}" />
 										</div>
@@ -111,7 +113,7 @@
 											<li>I'm a</li>
 											<li class="gender-img"><a href="#"><img id="search_male_image"  onclick="add_search_male(); remove_search_female()"   alt="male" src="{{asset('assets/images/male.gif')}}"/></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="#"><img id="search_female_image"  alt="female"  onclick="add_search_female(); remove_search_male()" src="{{asset('assets/images/female.gif')}}"/></a></li>
 										</ul>
-										<input type="hidden" id="search_gender" value="" name="search_gender" > 
+										<input type="hidden" id="search_gender" value="" name="search_gender" >
 										<select class="field drop-down-arw" name="religion">
 											<option value="">Religion</option>
 												<?php
@@ -131,7 +133,7 @@
 												<?php
 												}
 												?>
-										</select> 
+										</select>
 										<select class="field drop-down-arw" name="state">
 											<option value="">State</option>
 												<?php
@@ -151,23 +153,23 @@
 												<?php
 												}
 												?>
-										</select>                  
+										</select>
 										<input type="text" class="field"  name="dateob"  placeholder="Date of Birth"  data-field="date" readonly>
 										<div class="row">
 											<div class="col-sm-5">
-                                                <input type="submit"  class="reg_frnt_btn" value="SEARCH"/> 
-												<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />     
+                                                <input type="submit"  class="reg_frnt_btn" value="SEARCH"/>
+												<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
 											</div>
-									</form>  
+									</form>
 									<div class="col-sm-2">
 										<div class="or">OR</div>
-									</div> 
+									</div>
 									<div class="col-sm-5"style="text-align:right">
 										<input type="button" class="search-button quickFlipCta" value="REGISTER">
 									</div>
 									<div class="search_message"></div>
 										</div>
-              
+
 								</div>
 							</div>
 						</div>
@@ -176,14 +178,14 @@
 				</div>
             </div>
         </div>
-		
+
          <!-- End Banner -->
-		 
+
         <?php
         $payment_user_count=\DB::table('user_payment_details')
         ->count();
 		if($payment_user_count>=6)
-        {  
+        {
 		?>
         <div class="hm_highlitd_profile">
 			<div class="container">
@@ -196,7 +198,7 @@
 							//
                              //var_dump($profile);exit;
 							foreach($profile as $details)
-							{ 
+							{
 							$pk_id=$details->uid;
 							$encrypted_id = base64_encode($pk_id);
 							$gend=$details->gender;
@@ -209,9 +211,9 @@
 								<img alt="prfl4" src="{{ asset($details->path) }}">
 									<p class="pink-name"><a href="{{URL::to('user/highlighted-profile-view')}}/{{$pk_id}}"><?php echo $details->name;?></a></p>
 									<p class="qualification"><?php echo $details->education;?> (<?php echo $age; ?> yrs)</p>
-          
+
 							</div>
-                              <?php  
+                              <?php
 								}
 								?>
                             </div>
@@ -223,9 +225,9 @@
         <?php
 		}
 		?>
-		
+
         <!-- Clm3-->
-		
+
         <div class="hm_clm3">
             <div class="container">
 				<div class="row">
@@ -239,7 +241,7 @@
 							</ul>
 						</div>
 						<div class="app-google">
-							<img src="{{asset('assets/images/app_store.png')}}" width="181" style="margin-left:0px;" alt=""/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+							<img src="{{asset('assets/images/app_store.png')}}" width="181" style="margin-left:0px;" alt=""/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							<img src="{{asset('assets/images/google_play.png')}}" width="181" alt=""/>
 						</div>
 					</div>
@@ -249,15 +251,15 @@
 				</div>
             </div>
         </div>
-		
+
         <!-- End Clm3-->
-		 
-        <!-- Footer--> 
-		
+
+        <!-- Footer-->
+
         @include('include.home_footer')
-		
+
          <!-- End Footer -->
-		 
+
     </div>
     <script src="{{asset('assets/js/bootstrap.js')}}"></script>
     <script src="{{asset('assets/js/ie10-viewport-bug-workaround.js')}}"></script>
@@ -299,7 +301,7 @@
           }
         });
 
-        
+
         $w.bind('resize.example', function() {
           var nw = $w.width();
           if (nw < 990) {
@@ -316,44 +318,44 @@
 
 	<script type="text/javascript">
     $(document).ready(function(){
-                 
+
        $(window).scroll(function(){
-                              
+
           var e= $(window).scrollTop();
-                
+
           if ( e > 50){
-              
+
              $(".nav_main").addClass("short_menu")
-          
+
           }else{
               $(".nav_main").removeClass("short_menu")
-                    
+
           }
       });
-      
-    }); 
+
+    });
 	</script>
     <script>
 	$(document).ready(function() {
-	add_male(); 
+	add_male();
  });
  function add_male() {
-   var input = document.getElementById('male_image').alt; 
+   var input = document.getElementById('male_image').alt;
      document.getElementById('gendr').value=input;
-  
-   
+
+
     var image = document.getElementById('male_image');
     if (image.src.match("male1")) {
         image.src = "{{asset('assets/images/male.gif')}}";
     } else {
         image.src = "{{asset('assets/images/male1.png')}}";
     }
-}  
+}
 function add_female() {
   var input = document.getElementById('female_image').alt;
    document.getElementById('gendr').value=input;
   var image = document.getElementById('female_image');
-  
+
     if (image.src.match("female2")) {
         image.src = "{{asset('assets/images/female.gif')}}";
     } else {
@@ -364,13 +366,13 @@ function remove_male() {
     var image = document.getElementById('male_image');
     if (image.src.match("male1")) {
         image.src = "{{asset('assets/images/male.gif')}}";
-    }  
+    }
 }
 function remove_female() {
     var image = document.getElementById('female_image');
     if (image.src.match("female2")) {
         image.src = "{{asset('assets/images/female.gif')}}";
-    }  
+    }
 }
 
 
@@ -384,7 +386,7 @@ function randomString() {
     var rnum = Math.floor(Math.random() * chars.length);
     randomstring += chars.substring(rnum,rnum+1);
   }
-   
+
    document.getElementById('randid').value= randomstring;
 }
 </script>
@@ -392,46 +394,46 @@ function randomString() {
  <script type="text/javascript">
      $(document).ready(function()
  {
-  
-      
+
+
          var currentYear = (new Date).getFullYear();
          var curr_month = (new Date).getMonth();
          var currentday = (new Date).getDate();
-   
+
          var min= currentYear-41;
          var max= currentYear-19;
-         
+
          minAge = curr_month+"-"+currentday+"-"+min;
          maxAge = curr_month+"-"+currentday+"-"+max;
-       
+
      $("#dtBox").DateTimePicker({
-       
+
          maxDate:maxAge,
          minDate:minAge,
      });
 
-    
-     
+
+
  });
    </script>
-   
+
 
 <script>
          $(document).ready(function(){
-              add_male(); 
+              add_male();
          $('.reg-field').keypress(function(e) {
-  
+
                 if(e.which == 13) {
                 $("#registration").click();
-                                } 
+                                }
                                 });
               $("#registration").validate({
        // ignore: [],
           ignore: "input[type='text']:hidden",
         rules: {
-      
-   gender: "required",  
-         
+
+   gender: "required",
+
        username:{
             required: true,
             minlength: 3,
@@ -442,7 +444,7 @@ function randomString() {
             minlength: 4,
       maxlength:12
                   },
-        
+
             email: {
             required: true,
             email: true
@@ -462,98 +464,100 @@ function randomString() {
         unhighlight: function(element) {
             $(element).removeClass('red');
         },
-      
-     submitHandler: function (form) {
-    
-          $('.loader1').show();  
-         var value =$("#registration").serialize() ;
-         var email_id = $("#email").val();
-        //  alert(value);
-        $.ajax({
-        type:'POST',
-        url: "{{ url('user/userregistration') }}", 
-        data: value,
-        success:function (registration){
-        $(".message").show();
-      $('.loader1').hide();  
-    console.log(registration);
-           if(registration==1)
-               {
-                $(".message").html('<div class="alert alert-success">Succesfully registered, check your email to verify your account</div>');     
-                         setTimeout(function(){$(".message").hide(); }, 3000);
-                      
-                     }
-          else if(registration==2)
-                    {
-                $(".message").html('<div class="alert alert-danger">Username Already Exist</div>'); 
-                        setTimeout(function(){$(".message").hide(); }, 3000);
-            }     
 
-          
-                  else
+  /*
+  submitHandler: function (form) {
+
+       $('.loader1').show();
+      var value =$("#registration").serialize() ;
+      var email_id = $("#email").val();
+     //  alert(value);
+     $.ajax({
+     type:'POST',
+     url: "{{ url('user/userregistration') }}",
+     data: value,
+     success:function (registration){
+     $(".message").show();
+   $('.loader1').hide();
+ console.log(registration);
+        if(registration==1)
             {
-                $(".message").html('<div class="alert alert-danger">Sorry, it looks like ' +email_id+ ' belongs to an existing account</div>');
-                        // setTimeout(function(){$(".message").hide(); }, 3000);
-              }
-       
-                                              
-                    }
-                    });
-                        
-     }
-     
+             $(".message").html('<div class="alert alert-success">Succesfully registered, check your email to verify your account</div>');
+                      setTimeout(function(){$(".message").hide(); }, 3000);
+
+                  }
+       else if(registration==2)
+                 {
+             $(".message").html('<div class="alert alert-danger">Username Already Exist</div>');
+                     setTimeout(function(){$(".message").hide(); }, 3000);
+         }
+
+
+               else
+         {
+             $(".message").html('<div class="alert alert-danger">Sorry, it looks like ' +email_id+ ' belongs to an existing account</div>');
+                     // setTimeout(function(){$(".message").hide(); }, 3000);
+           }
+
+
+                 }
+                 });
+
+  }
+   */
+
                              });
  });
- 
+
 </script>
 <script>
 $(document).ready(function(){
-  
+
   $('.login-field').keypress(function(e) {
-  
+
     if(e.which == 13) {
      $("#login_id").click();
-                    } 
+                    }
         });
-  
+
     $("#login_id").click(function(){
-                  
+
   var value =$("#login_form").serialize() ;
-  
+
     $.ajax({
     type:'POST',
-    url:"{{ url('user/login') }}", 
-    data: value, 
+    url:"{{ url('user/login') }}",
+    data: value,
     success:function (login){
         $(".login_msg").show();
-    console.log(login);     
+    console.log(login);
       if(login==1 || login=='1Soulmate' || login=='Soulmate')
            {
-          window.location="{{ url('user/search') }}";           
+          window.location="{{ url('user/search') }}";
            }
          else if(login==2)
          {
-                                                      
-          window.location="{{ url('user/activation') }}";   
+
+          window.location="{{ url('user/activation') }}";
             }
       else if(login==0){
-        
-                 window.location="{{ url('user/login-failed?attempt_failed') }}"; 
-                           
-       
-                              
-        }   
+
+                 window.location="{{ url('user/login-failed?attempt_failed') }}";
+
+
+
+        }
        else if(login==3 || login=='3Soulmate')
                     {
-               window.location="{{ url('user/profile') }}"; 
-            } 
-                  
+               window.location="{{ url('user/profile') }}";
+            }
+
             else if(login==4)
             {
                 if(login==4)
                     {
                       alert("Same Gender.So Choose Opposite Gender in Highlighted Profile");
-                       window.location="{{ url('/') }}";  
+                       window.location="{{ url('/') }}";
                     }
                 else
                     {
@@ -561,15 +565,15 @@ $(document).ready(function(){
       window.location = "{!! URL::to('user/search-profile-view/"+login+"')!!}";
                /* setTimeout(function(){$(".login_msg").hide(); }, 3000);*/
                     }
-                  
-                              
+
+
             }
            else
             {
                 if(login=='error')
                     {
                       alert("Same Gender.So Choose Opposite Gender in Highlighted Profile");
-                       window.location="{{ url('/') }}";  
+                       window.location="{{ url('/') }}";
                     }
                 else
                     {
@@ -577,15 +581,15 @@ $(document).ready(function(){
       window.location = "{!! URL::to('user/search-profile-view/"+login+"')!!}";
                /* setTimeout(function(){$(".login_msg").hide(); }, 3000);*/
                     }
-                  
-                              
+
+
             }
                               }
              });
         });
      });
 
-</script>   
+</script>
 <!-- search -->
 
 
@@ -593,25 +597,25 @@ $(document).ready(function(){
  <script>
  $(document).ready(function() {
 
-add_male(); 
+add_male();
  });
  function add_search_male() {
-   var input = document.getElementById('search_male_image').alt; 
+   var input = document.getElementById('search_male_image').alt;
      document.getElementById('search_gender').value=input;
-  
-   
+
+
     var image = document.getElementById('search_male_image');
     if (image.src.match("male1")) {
         image.src = "{{asset('assets/images/male.gif')}}";
     } else {
         image.src = "{{asset('assets/images/male1.png')}}";
     }
-}  
+}
 function add_search_female() {
   var input = document.getElementById('female_image').alt;
    document.getElementById('search_gender').value=input;
   var image = document.getElementById('search_female_image');
-  
+
     if (image.src.match("female2")) {
         image.src = "{{asset('assets/images/female.gif')}}";
     } else {
@@ -622,13 +626,13 @@ function remove_search_male() {
     var image = document.getElementById('search_male_image');
     if (image.src.match("male1")) {
         image.src = "{{asset('assets/images/male.gif')}}";
-    }  
+    }
 }
 function remove_search_female() {
     var image = document.getElementById('search_female_image');
     if (image.src.match("female2")) {
         image.src = "{{asset('assets/images/female.gif')}}";
-    }  
+    }
 }
 
 
@@ -638,17 +642,17 @@ function remove_search_female() {
 
 <script>
          $(document).ready(function(){
-               add_search_male();    
-         
+               add_search_male();
+
               $("#search").validate({
-        
-         
+
+
         rules: {
-      
-    search_gender: "required",  
+
+    search_gender: "required",
     dateob:"required",
-    
-   
+
+
          },
     highlight: function(element) {
             $(element).addClass('red');
@@ -656,45 +660,44 @@ function remove_search_female() {
         unhighlight: function(element) {
             $(element).removeClass('red');
         },
-      
+
      submitHandler: function (form) {
-    
-          $('.loader1').show();  
+
+          $('.loader1').show();
          var value =$("#search").serialize() ;
-       
+
         //  alert(value);
         $.ajax({
         type:'POST',
-        url: "{{ url('user/user-search') }}", 
+        url: "{{ url('user/user-search') }}",
         data: value,
         success:function (registration){
         $(".message").show();
-      $('.loader1').hide();  
+      $('.loader1').hide();
     console.log(registration);
            if(registration==1)
                {
-               
-                     window.location="{{ url('user/not-login-search') }}";   
+
+                     window.location="{{ url('user/not-login-search') }}";
                      }
-          
-          
+
+
                   else
             {
                 $(".search_message").html('<div class="alert alert-danger">Sorry,error</div>');
                         // setTimeout(function(){$(".message").hide(); }, 3000);
               }
-       
-                                              
+
+
                     }
                     });
-                        
+
      }
-     
+
                              });
  });
- 
+
 </script>
-  
+
    </body>
 </html>
-

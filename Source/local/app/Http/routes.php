@@ -35,6 +35,13 @@ Route::get('/', function () {
    return View::make('frontend.welcome',array('profile'=>$prf_result));
 
 });
+
+
+
+Route::post('/', [
+        'uses' => '\App\Http\Controllers\userController@postUserregistration',
+      ]);
+
 Route::get('admin/', function () {
 
    return View::make('backend.adminlogin');

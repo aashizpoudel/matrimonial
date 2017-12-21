@@ -43,9 +43,7 @@ class userController extends Controller
 
 
 
-public function getUserregistration(){
-  echo "Hello";
-}
+
 
 
     /**
@@ -79,7 +77,8 @@ public function getUserregistration(){
          if($registration)
          {
 
-            echo 0;
+            // echo 0;
+            $message = '<div class="alert alert-danger">Sorry, it looks like '.$email.' belongs to an existing account</div>';
          }
          else
          {
@@ -88,8 +87,8 @@ public function getUserregistration(){
                            ->count();
              if($check_uname)
                {
-
-               echo 2;
+              $message= '<div class="alert alert-danger">Username Already Exist</div>';
+               //echo 2;
                 }
 
               else
@@ -99,10 +98,10 @@ public function getUserregistration(){
 
 
 
-     Mail::send('emails.welcome', array('email' => $email, 'user_key' => md5($key)), function ($message) use($email)
-           {
-    $message->to($email, 'To')->subject('Welcome to Soulmate!');
-           });
+    //  Mail::send('emails.welcome', array('email' => $email, 'user_key' => md5($key)), function ($message) use($email)
+    //        {
+    // $message->to($email, 'To')->subject('Welcome to Soulmate!');
+    //        });
 
 
          $registration=\DB::table('user_reg')->insert(
@@ -135,11 +134,13 @@ public function getUserregistration(){
 
 
 
+                     $message= '<div class="alert alert-success">Succesfully registered, check your email to verify your account</div>';
 
-                  echo 1;
+                  // echo 1;
                }
           }
-
+          $prf_result =  with(new dailyrecommendation)->highlightedprofile();
+          return view('frontend.welcome',['message'=>$message ,'profile'=>$prf_result]);
    }
      /*
    *verify email
