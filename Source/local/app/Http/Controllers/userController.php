@@ -197,9 +197,9 @@ class userController extends Controller
          $password=base64_encode($passw);
 
      $login=\DB::table('user_reg')
-           ->where(['email' => $email,'password'=>$password,'email_key'=>null])
+           ->where(['email' => $email,'password'=>$password])
               ->get();
-        // var_dump($login);exit;
+        //var_dump($login);exit;
 
          $payment=\Session::get('packageid');
         $paymentid= base64_encode($payment);
@@ -211,8 +211,17 @@ class userController extends Controller
 
          foreach($login as $value)
          {
-           $id = $value->id;
-       $username = $value->username;
+
+         
+          if($value->email_key != NUll){
+              // flash('Email Not Verfied!!')->error();
+            
+            Session::flash("attempt_failed","email");
+            echo 9 ;
+            return;
+          }
+        $id = $value->id;
+        $username = $value->username;
            $gender=$value->gender;
 
            $deactivation=$value->deactivate_status;
@@ -2799,8 +2808,8 @@ public function getLoginFailed()
 
      else
      {
-    return View::make('frontend.login_failed');
-         }
+            return View::make('frontend.login_failed');
+      }
   }
 public function getHighlightedProfileView($pk_id)
   {

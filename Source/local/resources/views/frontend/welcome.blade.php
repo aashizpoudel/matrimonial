@@ -94,9 +94,13 @@
 									}
 									?>
 										</div>
-										<div class="message">
-                        {{ $message }}
+                    @if (isset($message))
+                      {{-- expr --}}
+                      <div class="message">
+                        {!! $message !!}
                     </div>
+                    @endif
+										
 										<div class="loader1" >
 											<img src="{{asset('assets/images/ajax-loader.gif')}}" />
 										</div>
@@ -531,7 +535,7 @@ $(document).ready(function(){
     success:function (login){
         $(".login_msg").show();
     console.log(login);
-      if(login==1 || login=='1Soulmate' || login=='Soulmate')
+      if(login==1)
            {
           window.location="{{ url('user/search') }}";
            }
@@ -567,6 +571,8 @@ $(document).ready(function(){
                     }
 
 
+            }else if(login==9 || login=='9Soulmate'){
+              window.location="{{ url('user/login-failed') }}";
             }
            else
             {

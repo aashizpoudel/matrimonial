@@ -19,12 +19,21 @@
  
 if(isset($_GET['attempt_failed'])) {
 	 
-	echo $attempt_failed = \Session::get('attempt_failed');
+	
 	 
-	 
+	  echo $attempt_failed = \Session::get('attempt_failed');
 	
 	echo '<div class="alert alert-danger" id="try">Username or password incorrect</div>' ;
 
+}else
+  {
+   
+  if(\Session::get('attempt_failed')=='email'){
+   
+   
+  
+  echo '<div class="alert alert-danger" id="try">Your Email has not been verified yet!!</div>' ;
+}
 }
  
  
