@@ -203,6 +203,7 @@ if(count($notification)>0)
                                       {
                                       ?>
                                         <li><a href="{{ URL::to('user/profileview') }}"><img src="{{asset('assets/images/icon3.png')}}">&nbsp;&nbsp; Edit Profile</a></li>
+                                        <li><a href="{{ URL::to('user/dpp') }}"><img src="{{asset('assets/images/icon3.png')}}">&nbsp;&nbsp; Edit Desire Partner</a></li>
                                         <li><a href="{{ URL::to('user/settings/settings_view') }}"><img src="{{asset('assets/images/icon6.png')}}">&nbsp;&nbsp; Settings</a></li>
                                         <li><a href="{{ URL::to('user/settings/delete') }}"><img src="{{asset('assets/images/icon7.png')}}">&nbsp;&nbsp; Delete Profile</a></li>
                                        <li><a href="{{ URL::to('user/contact/feedback') }}" ><img src="{{asset('assets/images/icon1.png')}}">&nbsp;&nbsp; Feedback</a></li>

@@ -1,17 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
-
-
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
 use App\models\notification;
 use App\models\dailyrecommendation;
 use App\models\profilestrength;
-
 use View;
 use Input;
 use Redirect;
@@ -53,27 +48,23 @@ class userController extends Controller
      */
    public function postUserregistration()
    {
-
-         $cur_date= date("Y-m-d");
+        $cur_date= date("Y-m-d");
         $my_data=Input::all();
-    $random_id=$my_data['random_id'];
-    $gender=$my_data['gender'];
-    $username=$my_data['username'];
-    $pass=$my_data['password'];
-    $password=base64_encode($pass);
-    $email=$my_data['email'];
+        $random_id=$my_data['random_id'];
+        $gender=$my_data['gender'];
+        $username=$my_data['username'];
+        $pass=$my_data['password'];
+        $password=base64_encode($pass);
+        $email=$my_data['email'];
         $dob = $my_data['dob'];
         $contact_num=$my_data['contact_num'];
         $key=$email.$password;
-
          $registration=\DB::table('user_reg')
                        ->where(['email' => $email])
                        ->count();
 
 
          $date_for = date("Y-m-d", strtotime($dob));
-
-
          if($registration)
          {
 
@@ -104,7 +95,7 @@ class userController extends Controller
     //        });
 
 
-         $registration=\DB::table('user_reg')->insert(
+        $registration=\DB::table('user_reg')->insert(
        ['rand_id' => $random_id,'username' => $username, 'password'=>$password,'email' => $email,'gender' => $gender,
         'dob' =>$date_for,'date'=>$cur_date,'contact_num' => $contact_num,'email_key' =>md5($key)]);
 
@@ -1472,35 +1463,43 @@ public function getDistrictupdates()
 
   public function getSearch()
   {
-      $id=\Session::get('id');
+        $id=\Session::get('id');
         $cookie = Cookie::get('soulmate');
+
     if($cookie) {
       $id = $cookie;
     }
-    $gender=\Session::get('gender');
 
-    $matches=\DB::table('user_profile')
-            ->where('user_id',$id)->get();
+        $gender=\Session::get('gender');
+        $matches=\DB::table('user_profile')
+               ->where('user_id',$id)->get();
+
     //var_dump($matches);
+
+
     foreach($matches as $match)
      {
         $caste=$match->caste;
-         $state=$match->state;
-         $religion=$match->religion;
+        $state=$match->state;
+        $religion=$match->religion;
      }
-        if($id)
-    {
-      if($cookie){
-      $sess1= \Session::put('id',$cookie);
-          }
-     $user_gender=trim($gender);
-      $user_religion=trim($religion);
-      $user_caste=trim($caste);
-      $user_state=trim($state);
 
 
-    $minage=18;
-    $maxage=41;
+      if($id)
+      {
+        if($cookie){
+        $sess1= \Session::put('id',$cookie);
+      }
+
+
+        $user_gender=trim($gender);
+        $user_religion=trim($religion);
+        $user_caste=trim($caste);
+        $user_state=trim($state);
+
+
+        $minage=18;
+        $maxage=41;
 
     if($user_gender=='male')
     {
@@ -1510,6 +1509,10 @@ public function getDistrictupdates()
     {
       $search_gender="male";
     }
+
+
+
+
     $query = \DB::table('user_profile')
           ->leftJoin('user_reg', 'user_reg.id', '=', 'user_profile.user_id')
           ->leftJoin('religion','religion.religion_id','=','user_profile.religion')
@@ -1531,14 +1534,15 @@ public function getDistrictupdates()
 
     if(!isset($_POST['religion']) and !isset($_POST['caste']) and !isset($_POST['state']) and !isset($search_filter['dob']) and !isset($search_filter['education']) and !isset($search_filter['district']) and !isset($search_filter['occupation']) and !isset($search_filter['other_religion']) and !isset($search_filter['other_caste']))
     {
-      $maxdate = date('Y-m-d', strtotime($minage . ' years ago'));
-      $mindate = date('Y-m-d', strtotime($maxage . ' years ago'));
 
-           $query = $query->where('user_profile.religion',$user_religion);
-           $query = $query->where('user_profile.caste','=',$user_caste);
-           $query = $query->where('user_profile.state','=',$user_state);
-           $query =$query->where('user_reg.gender','=',$search_gender);
-           $query = $query->whereBetween('user_reg.dob',[$mindate,$maxdate]);
+          $maxdate = date('Y-m-d', strtotime($minage . ' years ago'));
+          $mindate = date('Y-m-d', strtotime($maxage . ' years ago'));
+
+          $query = $query->where('user_profile.religion',$user_religion);
+          $query = $query->where('user_profile.caste','=',$user_caste);
+          $query = $query->where('user_profile.state','=',$user_state);
+          $query = $query->where('user_reg.gender','=',$search_gender);
+          $query = $query->whereBetween('user_reg.dob',[$mindate,$maxdate]);
 
     }
     //var_dump($query->get());
@@ -1567,8 +1571,11 @@ public function getDistrictupdates()
 
         }
 
+        
+
          $results= with(new notification)->headersearch();
          $results['users'] = $query->get();
+         
          $results['chat_users'] = $this->userregvalues();
 
 
@@ -1580,6 +1587,12 @@ public function getDistrictupdates()
     }
 
   }
+
+
+
+
+
+
    function UserregValues()
   {
 
@@ -1596,6 +1609,9 @@ public function getDistrictupdates()
       $search_gender="male";
     }
 
+
+//query to set the chat users
+
     $query = \DB::table('user_reg')
                 ->join('user_profile', 'user_profile.user_id', '=', 'user_reg.id')
                 ->where('gender',$search_gender)
@@ -1603,7 +1619,7 @@ public function getDistrictupdates()
                 ->where('profile_strength','>=','59')
                 ->where('user_id','!=',$id)->get();
 
-
+             
     return $query;
 
    }
@@ -1682,6 +1698,12 @@ $intrstd_ppl_notification=\DB::table('notification')
     }
 
   }
+    
+
+
+
+
+
      public function getProfileview()
    {
          $id= \Session::get('id');
@@ -1724,6 +1746,86 @@ $intrstd_ppl_notification=\DB::table('notification')
             return redirect('user/error-page');
          }
       }
+
+
+
+
+
+
+
+//desire partner preference
+
+
+
+
+
+     public function getDpp()
+   {
+         $id= \Session::get('id');
+         $cookie = Cookie::get('soulmate');
+    if($cookie) {
+      $id = $cookie;
+    }
+    $query=\DB::table('user_profile')
+          ->leftJoin('user_reg', 'user_reg.id', '=', 'user_profile.user_id')
+            ->leftJoin('religion', 'religion.religion_id', '=', 'user_profile.religion')
+            ->leftJoin('caste', 'caste.caste_id', '=', 'user_profile.caste')
+            ->leftJoin('star', 'star.star_id', '=', 'user_profile.star')
+            ->leftJoin('rassi_moonsign','rassi_moonsign.rassimoonsign_id', '=', 'user_profile.rassi_moonsign')
+            ->leftJoin('zodiac_starsign', 'zodiac_starsign.zodiac_starsign_id', '=', 'user_profile.zodiac_starsign')
+              ->leftJoin('country', 'country.country_id', '=', 'user_profile.country_livingin')
+            ->leftJoin('state', 'state.state_id', '=', 'user_profile.state')
+            ->leftJoin('district', 'district.district_id', '=', 'user_profile.district')
+            ->leftJoin('mother_tongue', 'mother_tongue.mother_tongue_id', '=', 'user_profile.mother_tongue')
+            ->leftJoin('education', 'education.education_id', '=', 'user_profile.education')
+            ->leftJoin('occupation', 'occupation.occupation_id', '=', 'user_profile.occupation')
+
+                 ->where(['user_id' => $id])->get();
+         if($id)
+         {
+
+          if($cookie){
+      $sess1= \Session::put('id',$cookie);
+      }
+       // $values['user_details']=$query->get();
+           $header_results = with(new notification)->headersearch();
+       $daily_recommendation= with(new dailyrecommendation)->dailyrecommendation();
+
+            // var_dump($daily_recommendation);exit;
+          $profile_strength=with(new profilestrength)->profilestrength($id);
+
+     return View::make('frontend.dpp',array('users'=>$query,'results'=>$header_results,'recommendation'=>$daily_recommendation,'profile_str'=>$profile_strength));
+         }
+         else
+         {
+            return redirect('user/error-page');
+         }
+      }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     public function postUpdateBasicdetails()
         {
 

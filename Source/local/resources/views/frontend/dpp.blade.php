@@ -197,7 +197,8 @@
 
                           ?>
 						<div class="profile-details1">
-								<h1>Personel Information</h1>
+								<h1 class="text-center" style="padding: 0;">Desired Partner Profile</h1>
+								<h3 class="text-center">The criteria you mention here determines the ‘Desired Partner Matches’ you see. So please review this information carefully. Moreover, Filters determine whose Interests/Calls you want to receive.</h3>
 								<div class="profile-inner1">
                           
 									<div class="prof-sec ">
@@ -207,12 +208,17 @@
 											<button class="head-edit-icon basic_edit"></button>
 										</div>
 										<div class="row">
+
+
+
+
+
 											<div class="col-md-6">
 											<ul class="parent-list basicdetails_form">
 												<li>
 													<ul class="child-list">
-														<li class="first">Name</li>
-														<li class="second">:&nbsp;&nbsp;&nbsp;<?php echo $user->name; ?></li>
+														<li class="first">Age</li>
+														<li class="second">:&nbsp;&nbsp;&nbsp;<?php echo $user->age; ?></li>
 													</ul>
 												</li>
 												<li>
@@ -229,66 +235,34 @@
 														<li class="second">:&nbsp;&nbsp;&nbsp;<?php echo $height; ?></li>
 													</ul>
 												</li>
-												<li>
-													<ul class="child-list">
-														<li class="first">Weight</li>
-														<li class="second">:&nbsp;&nbsp;&nbsp;<?php echo $user->weight; ?></li>
-													</ul>
-												</li>
-												<li>
-													<ul class="child-list">
-														<li class="first">Eating Habbit</li>
-														<li class="second">:&nbsp;&nbsp;&nbsp;<?php echo $user->eating_habits; ?></li>
-													</ul>
-												</li>
-												<li>
-													<ul class="child-list">
-														<li class="first">Smoking Habbit</li>
-														<li class="second">:&nbsp;&nbsp;&nbsp;<?php echo $user->smoking_habits; ?></li>
-													</ul>
-												</li>
-											</ul>
 
-
-											</div>
-											<div class="col-md-6">
-												<ul class="parent-list basicdetails_form">
-												<li>
-													<ul class="child-list">
-														<li class="first">Body Type</li>
-														<li class="second">:&nbsp;&nbsp;&nbsp;<?php echo $user->body_type; ?></li>
-													</ul>
-												</li>
-												<li>
-													<ul class="child-list">
-														<li class="first">Complextion</li>
-														<li class="second">:&nbsp;&nbsp;&nbsp;<?php echo $user->complexion; ?></li>
-													</ul>
-												</li>
 												<li>
 													<ul class="child-list">
 														<li class="first">Martial Status</li>
 														<li class="second">:&nbsp;&nbsp;&nbsp;<?php echo $user->marital_status; ?></li>
 													</ul>
 												</li>
+	
 												<li>
 													<ul class="child-list">
-														<li class="first">Physical Staus</li>
-														<li class="second">:&nbsp;&nbsp;&nbsp;<?php echo $user->physical_status; ?></li>
+														<li class="first">Country</li>
+														<li class="second">:&nbsp;&nbsp;&nbsp;<?php echo $user->country; ?></li>
 													</ul>
 												</li>
-												<li>
-													<ul class="child-list">
-														<li class="first">Drinking Habbit</li>
-														<li class="second">:&nbsp;&nbsp;&nbsp;<?php echo $user->drinking_habit; ?></li>
-													</ul>
-												</li>
+												
 											</ul>
-
-
 											</div>
 
+
+
+
+
 										</div>
+
+
+
+
+
 
 
 										<hr class="hbar">
@@ -311,43 +285,12 @@
 												</select>
 											</div>
 
-											<div class="col-md-4">
-												Body Type :<br>
-												<Select class="eselect dda" type="text" name="body_type" id="body_type" placeholder="Body Type" required>
-												 <option <?php if($user->body_type=='Slim') { echo "selected='selected'"; } ?>>Slim</option>
-                                                <option	<?php if($user->body_type=='Athletic') { echo "selected='selected'"; } ?>>Athletic</option>
-                                                <option	<?php if($user->body_type=='Average') { echo "selected='selected'"; } ?>>Average</option>
-                                                <option	<?php if($user->body_type=='Heavy') { echo "selected='selected'"; } ?>>Heavy</option>
-												</Select>
-											</div>
-
-											<div class="col-md-2">
-												<select  class="edrop dda" id="visibility_body_type" onchange="common_value()">
-													 <option value="1" >Public</option>
-                                                     <option value="0">Private</option>
-												</select>
-											</div>
+											
 										</div>
 
 
 										<div class="row pdng25">
-											<div class="col-md-4">
-												Complextion :<br>
-												<Select class="eselect dda" name="complexion" id="complexion" >
-												<option	<?php if($user->complexion=='Very Fair'){echo "selected='selected'";} ?>>Very Fair</option>
-                                                <option	<?php if($user->complexion=='Fair'){echo "selected='selected'";} ?>>Fair</option>
-                                                <option	<?php if($user->complexion=='Wheatish'){echo "selected='selected'";} ?>>Wheatish</option>
-                                                <option	<?php if($user->complexion=='Wheatish Brown'){echo "selected='selected'";} ?>>Wheatish Brown</option>
-                                                <option	<?php if($user->complexion=='Dark'){echo "selected='selected'";} ?>>Dark</option>
-												</Select>
-											</div>
-
-											<div class="col-md-2">
-												<select  class="edrop dda" id="visibility_complexion" onchange="common_value()">
-													 <option value="1" >Public</option>
-                                                     <option value="0">Private</option>
-												</select>
-											</div>
+											
 
 											<div class="col-md-4">
 												Height :<br>
@@ -386,44 +329,6 @@
 										</div>
 
 
-										<div class="row pdng25">
-											<div class="col-md-4">
-												Physical Status :<br>
-												<Select class="eselect dda" name="physical_status" id="physical_status">
-													 <option	<?php if($user->physical_status=='Normal'){echo "selected='selected'";} ?>>Normal</option>
-                                                <option	<?php if($user->physical_status=='Handicapped'){echo "selected='selected'";} ?>>Handicapped</option>
-												</Select>
-											</div>
-
-											<div class="col-md-2">
-												<select  class="edrop dda" id="visibility_physical_status" onchange="common_value()">
-													  <option value="1" >Public</option>
-                                                       <option value="0">Private</option>
-												</select>
-											</div>
-
-											<div class="col-md-4">
-												Weight :<br>
-												<Select class="eselect dda" type="text">
-													 <option value="">Weight</option>
-                                                <?php 
-                                                for($j=35;$j<161;$j++)
-                                                { 
-											   ?>
-											<option	<?php if($user->weight==$j) {echo "selected='selected'";} ?> value='<?php echo $j; ?>'> <?php echo $j; ?></option>
-												<?php 
-											      } 
-											      ?>
-												</Select>
-											</div>
-
-											<div class="col-md-2">
-												<select  class="edrop dda" id="visibility_weight" onchange="common_value()">
-													<option value="1" >Public</option>
-                                                    <option value="0">Private</option>
-												</select>
-											</div>
-										</div>
 
 										<div class="row pdng25">
 											<div class="col-md-4">
@@ -530,6 +435,14 @@
 														<li class="second">:&nbsp;&nbsp;&nbsp;<?php if($user->caste==""){echo $user->other_caste;}else {echo $user->caste;} ?></li>
 													</ul>
 												</li>
+
+												<li>
+													<ul class="child-list">
+														<li class="first">Mother Tongue</li>
+														<li class="second">:&nbsp;&nbsp;&nbsp;<?php echo $user->mother_tongue; ?></li>
+													</ul>
+												</li>
+
 												<li>
 													<ul class="child-list">
 														 <?php
@@ -550,24 +463,7 @@
 							                             ?>
 													</ul>
 												</li>
-												<li>
-													<ul class="child-list">
-														<?php
-
-                                                 foreach($users as $trial)
-                                                    {
-								                  $rassi_moonsign=$trial->rassi_moonsign;
-						                            }
-						                          if($rassi_moonsign!="")
-						                             {
-								                        ?>
-														<li class="first">Raasi Moon Sign</li>
-														<li class="second">:&nbsp;&nbsp;&nbsp;<?php echo $user->rassi_moonsign; ?></li>
-												   <?php
-							                         }
-							                        ?>
-													</ul>
-												</li>
+												
 												<li>
 													<ul class="child-list">
 
@@ -893,7 +789,7 @@
 									<div class="prof-sec">
 										<div class="head-edit">
 											<div class="head-icon"><img src="{{ asset('assets/images/img7.png') }}"></div>
-											<div class="head-txt"><h2>Professional Information</h2></div>
+											<div class="head-txt"><h2>Education & Profession Details</h2></div>
 											<button class="head-edit-icon edit_professionalinfo"></button>
 										</div>
 										<div class="row">
@@ -905,30 +801,15 @@
 														<li class="second">:&nbsp;&nbsp;&nbsp;<?php echo $user->education; ?></li>
 													</ul>
 												</li>
-												<li>
-													<ul class="child-list">
-														<li class="first">College</li>
-														<li class="second">:&nbsp;&nbsp;&nbsp;<?php echo $user->college; ?></li>
-													</ul>
-												</li>
-												<li>
-													<ul class="child-list">
-														<li class="first">Education in Detail</li>
-														<li class="second">:&nbsp;&nbsp;&nbsp;<?php echo $user->education_in_detail; ?></li>
-													</ul>
-												</li>
+												
+												
 												<li>
 													<ul class="child-list">
 														<li class="first">Occupation</li>
 														<li class="second">:&nbsp;&nbsp;&nbsp;<?php echo $user->occupation; ?></li>
 													</ul>
 												</li>
-												<li>
-													<ul class="child-list">
-														<li class="first">Occupation in Detail</li>
-														<li class="second">:&nbsp;&nbsp;&nbsp;<?php echo $user->occupation_in_detail; ?></li>
-													</ul>
-												</li>
+												
 												<li>
 													<ul class="child-list">
 														<li class="first">Employed In</li>
@@ -1083,387 +964,6 @@
 									</div>
 
 
-                                     <!--end edit professional info form-->
-
-
-									<div class="prof-sec">
-										<div class="head-edit">
-											<div class="head-icon"><img src="{{ asset('assets/images/img1.png') }}"></div>
-											<div class="head-txt"><h2>Family Details</h2></div>
-											<button class="head-edit-icon edit_familydetails"></button>
-										</div>
-										<div class="row">
-											<div class="col-md-12">
-											<ul class="parent-list details_familydetails">
-												<li>
-													<ul class="child-list">
-														<li class="first">Family Value</li>
-														<li class="second">:&nbsp;&nbsp;&nbsp;<?php echo $user->family_values; ?></li>
-													</ul>
-												</li>
-												<li>
-													<ul class="child-list">
-														<li class="first">Family Type</li>
-														<li class="second">:&nbsp;&nbsp;&nbsp;<?php echo $user->family_type; ?></li>
-													</ul>
-												</li>
-												<li>
-													<ul class="child-list">
-														<li class="first">Family Status</li>
-														<li class="second">:&nbsp;&nbsp;&nbsp;<?php echo $user->familystatus; ?></li>
-													</ul>
-												</li>
-												<li>
-													<ul class="child-list">
-														<li class="first">Father Status</li>
-														<li class="second">:&nbsp;&nbsp;&nbsp;<?php echo $user->fathers_status; ?></li>
-													</ul>
-												</li>
-												<li>
-													<ul class="child-list">
-														<li class="first">Mother Status</li>
-														<li class="second">:&nbsp;&nbsp;&nbsp;<?php echo $user->mothers_status; ?></li>
-													</ul>
-												</li>
-												<li>
-													<ul class="child-list">
-														<?php
-                                                   foreach($users as $trial)
-                                                     {
-								                    $no_of_brothers=$trial->no_of_brothers;
-						                             }
-						                            if($no_of_brothers!="None")
-							                             {
-								                         ?>
-														<li class="first">No of Brother</li>
-														<li class="second">:&nbsp;&nbsp;&nbsp;<?php echo $user->no_of_brothers; ?></li>
-														<?php
-							                             }
-							                             ?>
-													</ul>
-												</li>
-												 <?php
-                                            if($no_of_brothers!="None")
-                                               {
-
-                                                  ?>
-												<li>
-													<ul class="child-list">
-														<?php
-                                                   foreach($users as $trial)
-                                                     {
-								                   $brothers_married=$trial->brothers_married;
-						                             }
-						                            if($brothers_married!="")
-							                           {
-								                         ?>
-														<li class="first">Brothers Married</li>
-														<li class="second">:&nbsp;&nbsp;&nbsp;<?php echo $user->brothers_married; ?></li>
-														<?php
-							                            }
-							                            ?>
-													</ul>
-												</li>
-											<?php
-							                   }
-							                   ?>
-												<li>
-													<ul class="child-list">
-													<?php
-                                                foreach($users as $trial)
-                                                 {
-								               $no_of_sisters=$trial->no_of_sisters;
-						                         }
-						                       if($no_of_sisters!="None")
-							                     {
-								                   ?>	
-														<li class="first">No of Sisters</li>
-														<li class="second">:&nbsp;&nbsp;&nbsp;<?php echo $user->no_of_sisters; ?></li>
-												<?php
-							                      }
-							                      ?>		
-													</ul>
-												</li>
-												<li>
-													<ul class="child-list">
-														<?php
-                                                foreach($users as $trial)
-                                                  {
-								                 $sisters_married=$trial->sisters_married;
-						                           }
-						                         if($sisters_married!="None")
-							                       {
-								                         ?>
-														<li class="first">Sisters Married</li>
-														<li class="second">:&nbsp;&nbsp;&nbsp;<?php echo $user->sisters_married; ?></li>
-												 <?php
-							                      }
-							                      ?>		
-													</ul>
-												</li>
-											</ul>
-											</div>
-										</div>
-										<hr class="hbar">
-									</div>
-                                <!--start edit family dtls form-->
-                                <form class="form-class"  id="family_details_form">
-                                  <div class="prof-sec" id="family_dtls_hide" style="display:none">
-										
-										<div class="row pdng25">
-											<div class="col-md-4">
-												Father Status :<br>
-												<input class="einput" type="text" name="fathers_status"  id="FathersStatus1" placeholder="Father's Status" value="<?php echo $user->fathers_status; ?>">
-
-											</div>
-
-											<div class="col-md-2">
-												<select  class="edrop dda" id="visibility_fathers_status" onchange="common_value()">
-													<option value="1" >Public</option>
-                                                    <option value="0">Private</option>
-												</select>
-											</div>
-											<div class="col-md-4">
-												Mother Status :<br>
-												<input class="einput" type="text" name="mothers_status"  id="MothersStatus" placeholder="Mother's Status" value="<?php echo $user->mothers_status; ?>">
-
-											</div>
-
-											<div class="col-md-2">
-												<select  class="edrop dda" id="visibility_mother_status" onchange="common_value()">
-													<option value="1" >Public</option>
-                                                    <option value="0">Private</option>
-												</select>
-											</div>
-										</div>
-										<div class="row pdng25">
-											<div class="col-md-4">
-												Family Values :<br>
-												<Select class="eselect dda" type="text" name="family_values"  id="family_values"  placeholder="Family Values">
-												 <option	<?php if($user->family_values=='Orthodox'){echo "selected='selected'";}?>>Orthodox</option>
-                                                <option	<?php if($user->family_values=='Traditional'){echo "selected='selected'";}?>>Traditional</option>
-                                                <option	<?php if($user->family_values=='Moderate'){echo "selected='selected'";}?>>Moderate</option>
-                                                <option	<?php if($user->family_values=='Liberal'){echo "selected='selected'";}?>>Liberal</option>
-                                             </select>
-
-											</div>
-
-											<div class="col-md-2">
-												<select  class="edrop dda" id="visibility_family_values" onchange="common_value()">
-													 <option value="1" >Public</option>
-                                                     <option value="0">Private</option>
-												</select>
-											</div>
-											<div class="col-md-4">
-												Family Type :<br>
-												<Select class="eselect dda" type="text" name="family_type"  id="family_type"  placeholder="Family Type">
-												 <option <?php if($user->family_type=='Joint Family'){echo "selected='selected'";}?>>Joint Family</option>
-                                                <option	<?php if($user->family_type=='Nuclear Family'){echo "selected='selected'";}?>>Nuclear Family</option>
-                                                <option	<?php if($user->family_type=='Others'){echo "selected='selected'";}?>>Others</option>
-                                             </select>
-
-											</div>
-
-											<div class="col-md-2">
-												<select  class="edrop dda" id="visibility_family_type" onchange="common_value()">
-													<option value="1" >Public</option>
-                                                    <option value="0">Private</option>
-												</select>
-											</div>
-										</div>
-										<div class="row pdng25">
-											<div class="col-md-4">
-												Family Status :<br>
-												<Select class="eselect dda" type="text" name="familystatus"  id="familystatus"  placeholder="Family Status">
-												 <option	<?php if($user->familystatus=='Middle Class'){echo "selected='selected'";}?>>Middle Class</option>
-                                                <option	<?php if($user->familystatus=='Upper Middle Class'){echo "selected='selected'";}?>>Upper Middle Class</option>
-                                                <option	<?php if($user->familystatus=='Rich'){echo "selected='selected'";}?>>Rich</option>
-                                                <option	<?php if($user->familystatus=='Affluent'){echo "selected='selected'";}?>>Affluent</option>
-                                             </select>
-
-											</div>
-
-											<div class="col-md-2">
-												<select  class="edrop dda" id="visibility_family_status" onchange="common_value()">
-													<option value="1" >Public</option>
-                                                    <option value="0">Private</option>
-												</select>
-											</div>
-											<div class="col-md-4">
-												No of Brothers :<br>
-												<Select class="eselect dda"  name="no_of_brothers" id="NfBs1" >
-												 <option  <?php if($user->no_of_brothers=='None'){echo "selected='selected'";}?>>None</option>
-                                                <option	<?php if($user->no_of_brothers=='1'){echo "selected='selected'";}?>>1</option>
-                                                <option	<?php if($user->no_of_brothers=='2'){echo "selected='selected'";}?>>2</option>
-                                                <option	<?php if($user->no_of_brothers=='3'){echo "selected='selected'";}?>>3</option>
-                                                <option	<?php if($user->no_of_brothers=='4'){echo "selected='selected'";}?>>4</option>
-                                                <option	<?php if($user->no_of_brothers=='5'){echo "selected='selected'";}?>>5</option>
-                                                <option	<?php if($user->no_of_brothers=='other'){echo "selected='selected'";}?>>Other</option>
-                                             </select>
-
-											</div>
-
-											<div class="col-md-2">
-												<select  class="edrop dda" id="visibility_no_of_brothers" onchange="common_value()">
-													 <option value="1" >Public</option>
-                                                     <option value="0">Private</option>
-												</select>
-											</div>
-										</div>
-										<div class="row pdng25">
-								 
-								 <?php
-                                 if($user->no_of_brothers=='None')
-                                   {
-                                $a='style="display:none;"';
-                                   }
-                                  else
-                                   {
-                                 $a="";
-                                   }
-                                  ?>                      
-     
-											<div class="col-md-4" <?php echo $a;?>>
-												Brothers Married :<br>
-												<Select class="eselect dda"  name="brothers_married" id="BrsM" >
-												 <option  <?php if($user->brothers_married=='None'){echo "selected='selected'";}?>>None</option>
-                                               
-                                                <option	<?php if($user->brothers_married=='1'){echo "selected='selected'";}?>>1</option>
-                                                <option	<?php if($user->brothers_married=='2'){echo "selected='selected'";}?>>2</option>
-                                                <option	<?php if($user->brothers_married=='3'){echo "selected='selected'";}?>>3</option>
-                                                <option	<?php if($user->brothers_married=='4'){echo "selected='selected'";}?>>4</option>
-                                                <option	<?php if($user->brothers_married=='5'){echo "selected='selected'";}?>>5</option>
-                                                <option	<?php if($user->brothers_married=='other'){echo "selected='selected'";}?>>Other</option>
-                                             </select>
-
-											</div>
-
-											<div class="col-md-2" <?php echo $a;?>>
-												<select  class="edrop dda" id="visibility_brothers_married" onchange="common_value()">
-													 <option value="1" >Public</option>
-                                                     <option value="0">Private</option>
-												</select>
-											</div>
-											<div class="col-md-4">
-												No of Sister :<br>
-												<Select class="eselect dda"  name="no_of_sisters" id="NoS" >
-												 <option  <?php if($user->no_of_sisters=='None'){echo "selected='selected'";}?>>None</option>
-                                                <option	<?php if($user->no_of_sisters=='1'){echo "selected='selected'";}?>>1</option>
-                                                <option	<?php if($user->no_of_sisters=='2'){echo "selected='selected'";}?>>2</option>
-                                                <option	<?php if($user->no_of_sisters=='3'){echo "selected='selected'";}?>>3</option>
-                                                <option	<?php if($user->no_of_sisters=='4'){echo "selected='selected'";}?>>4</option>
-                                                <option	<?php if($user->no_of_sisters=='5'){echo "selected='selected'";}?>>5</option>
-                                                <option	<?php if($user->no_of_sisters=='other'){echo "selected='selected'";}?>>Other</option>
-                                             </select>
-
-											</div>
-
-											<div class="col-md-2">
-												<select  class="edrop dda" id="visibility_no_of_sisters" onchange="common_value()">
-													<option value="1" >Public</option>
-                                                    <option value="0">Private</option>
-												</select>
-											</div>
-										</div>
-										<div class="row pdng25">
-											 <?php
-                                     if($user->no_of_sisters=='None')
-                                       {
-                                       $b='style="display:none;"';
-                                        }
-                                        else
-                                        {
-                                         $b="";
-                                        }
-                                        ?>   
-											<div class="col-md-4" <?php echo $b;?>>
-												Sisters Married :<br>
-												<Select class="eselect dda" type="text">
-												 <option <?php if($user->sisters_married=='None'){echo "selected='selected'";}?>>None</option>
-                                                <option	<?php if($user->sisters_married=='1'){echo "selected='selected'";}?>>1</option>
-                                                <option	<?php if($user->sisters_married=='2'){echo "selected='selected'";}?>>2</option>
-                                                <option	<?php if($user->sisters_married=='3'){echo "selected='selected'";}?>>3</option>
-                                                <option	<?php if($user->sisters_married=='4'){echo "selected='selected'";}?>>4</option>
-                                                <option	<?php if($user->sisters_married=='5'){echo "selected='selected'";}?>>5</option>
-                                                <option	<?php if($user->sisters_married=='other'){echo "selected='selected'";}?>>Other</option>
-                                             </select>
-
-											</div>
-
-											<div class="col-md-2">
-												<select  class="edrop dda" id="visibility_sisters_married" onchange="common_value()">
-													 <option value="1" >Public</option>
-                                                     <option value="0">Private</option>
-												</select>
-											</div>
-											<div class="col-md-4">
-
-
-											</div>
-
-											<div class="col-md-2">
-
-											</div>
-										</div>
-										<div class="row pdng25">
-											<input type="submit" class="sbt-btn" value="submit" id="regg4">
-											<input type="submit" value="Cancel">
-										</div>
-
-										<hr class="hbar">
-
-									</div>
-								</form>
-
-                                <!--end edit family dtls form-->
-
-									<div class="prof-sec">
-										<div class="head-edit">
-											<div class="head-icon"><img src="{{ asset('assets/images/img5.png') }}"></div>
-											<div class="head-txt"><h2>About my Family</h2></div>
-											<button class="head-edit-icon edit_aboutfamily"></button>
-										</div>
-										<div class="row">
-										<div class="col-md-12">
-											<ul class="parent-list details_aboutmyfamily">
-												<li>
-													<ul class="child-list">
-														<li class="first parent-list">About My Family</li>
-														<li class="second">:&nbsp;&nbsp;&nbsp;<?php echo $user->about_my_family; ?></li>
-													</ul>
-												</li>
-											</ul>
-										</div>
-										</div>
-									</div>
-									<!--start edit about my family form-->
-									 <form class="form-class"  id="aboutmyfamily-form">
-                                     <div class="prof-sec" id="abt_myfamily_hide" style="display:none">
-										
-										<div class="row pdng25">
-										<div class="col-md-10">
-												About My Family :<br>
-												<textarea class="einput" type="text"  name="about_my_family" style="height:150px;"><?php echo $user->about_my_family;?></textarea>
-
-											</div>
-											<div class="col-md-2">
-												<select  class="edrop dda" id="visibility_about_my_family" onchange="common_value()">
-													 <option value="1" >Public</option>
-                                                     <option value="0">Private</option>
-												</select>
-											</div>
-										</div>
-
-
-										
-											<div class="row pdng25">
-											<input type="submit" class="sbt-btn" value="Submit" id="abtmyfamily_form">
-											<input type="submit" value="Cancel">
-										</div>
-
-									</div>
-								</form>
-									<!--end edit about my family form-->
 								</div>
 							</div>
 							<?php

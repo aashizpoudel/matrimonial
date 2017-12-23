@@ -15,25 +15,29 @@ $sess_id= \Session::get('id');
    ?>
 
 @include('include.profile_header')
-        
+
         
         
         <meta name="_token" content="{!! csrf_token() !!}"/>
         
-      <!--  <link type="text/css" rel="stylesheet" media="all" href="{{asset('assets/css/chat/chat.css')}}" />
-	  <link type="text/css" rel="stylesheet" media="all" href="{{asset('assets/css/chat/screen.css')}}" /> -->
+       <link type="text/css" rel="stylesheet" media="all" href="{{asset('assets/css/chat/chat.css')}}" />
+	  <link type="text/css" rel="stylesheet" media="all" href="{{asset('assets/css/chat/screen.css')}}" />
 	    
         
          
          <div class="section2">
+
             <div class="container">
+               @include('include.nav-header')
               <div class="row">
                    <div class="part-main">
                     	 <button class="chat-btn">
            <img src="{{asset('assets/images/chat.png')}}">
            </button>
-            
-						
+         
+						<h1 style="padding: 0;margin:  0; width: 25%;">
+                 &nbsp;&nbsp;{{ sizeof($results['users']) }} Matches found</h1>
+
 						<div class="part1">
                        
 
@@ -267,7 +271,6 @@ foreach($get_occupation as $occu)
                         
                         
                          <div class="part2 search-results">
-
 
 			 <?php
 	 $data = $results['users'];
