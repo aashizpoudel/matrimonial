@@ -78,8 +78,8 @@
                           <td><?php echo $user_list->district;?></td>
                           <td><p data-toggle="modal" data-target="#myModal<?php echo $user_list->user_id;?>" >
              
-              <a class="loginlink" href="#">view more</a></p><?php if($user_list->img_status==0){?><span  propic_id="<?php echo $user_list->id;?>" class="pic approve">Image Approve</span><?php } else {?><span  propic_id="<?php echo $user_list->id;?>" class="pic approved">Image Approved</span><?php }?>
-              /<?php if($user_list->img_status==0){?><span  prpic_id="<?php echo $user_list->id;?>" class="pic canceled">Canceled</span><?php } else {?><span  prpic_id="<?php echo $user_list->id;?>" class="pics cancel">Cancel</span><?php }?></td>
+              <a class="loginlink" href="#">view more</a></p><?php if($user_list->img_status==0){?><span  propic_id="<?php echo $user_list->id;?>" class="pic btn btn-success approve">Image Approve</span><?php } else {?><span  propic_id="<?php echo $user_list->id;?>" class="pic approved">Image Approved</span><?php }?>
+              /<?php if($user_list->img_status==0){?><span  prpic_id="<?php echo $user_list->id;?>" class="pic canceled">Canceled</span><?php } else {?><span  prpic_id="<?php echo $user_list->id;?>" class="pics btn btn-danger">Cancel</span><?php }?></td>
               
               
                  <!--  popup -->

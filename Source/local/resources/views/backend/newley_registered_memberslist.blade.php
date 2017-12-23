@@ -77,8 +77,8 @@
                           <td><?php echo $list->district;?></td>
                           <td><p data-toggle="modal" data-target="#myModal<?php echo $list->user_id;?>" class="paraloginlink">
              
-              <a class="loginlink" href="#">view more</a></p><?php if($list->img_status==0){?><span  propic_id="<?php echo $list->id;?>" class="pic approve">Image Approve</span><?php } else {?><span  propic_id="<?php echo $list->id;?>" class="pic approved">Image Approved</span><?php }?>
-              /<?php if($list->img_status==0){?><span  prpic_id="<?php echo $list->id;?>" class="pic canceled">Canceled</span><?php } else {?><span  prpic_id="<?php echo $list->id;?>" class="pics cancel">Cancel</span><?php }?></td>
+              <a class="loginlink" href="#">view more</a></p><?php if($list->img_status==0){?><span  propic_id="<?php echo $list->id;?>" class="pic btn btn-success approve">Image Approve</span><?php } else {?><span  propic_id="<?php echo $list->id;?>" class="pic btn approved">Image Approved</span><?php }?>
+              / <?php if($list->img_status==0){?><span  prpic_id="<?php echo $list->id;?>" class="pic btn canceled">Canceled</span><?php } else {?><span  prpic_id="<?php echo $list->id;?>" class="pics btn btn-danger ">Cancel</span><?php }?></td>
                           
                                      <!--  popup -->
               

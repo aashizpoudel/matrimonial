@@ -1,4 +1,4 @@
-<?php
+<?php 
 \Session::forget('attempt_failed');
 
  $get_state=\ DB::table('state')->get();
@@ -198,9 +198,10 @@
 						<img class="sec-rib" src="{{asset('assets/images/ribbon.gif')}}"/>
 						<div class="caroufredsel_wrapper">
 							<div id="carousel">
+                <img src="http://www.love.quotesms.com/images/love-images/Cute-Love-Images.jpg" alt="">
                             <?php
 							//
-                             //var_dump($profile);exit;
+                
 							foreach($profile as $details)
 							{
 							$pk_id=$details->uid;
