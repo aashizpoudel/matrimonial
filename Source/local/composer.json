@@ -10,7 +10,7 @@
         "maatwebsite/excel": "~2.0.0",
         "ignited/laravel-omnipay": "2.*",
        "omnipay/omnipay": "*",
-        "dberry37388/laravel5-alerts": "^0.0.1",
+        
          "laracasts/flash": "~1.3"
     },
     "require-dev": {
@@ -33,9 +33,7 @@
             "php artisan clear-compiled",
             "php artisan optimize"
         ],
-        "pre-update-cmd": [
-            "php artisan clear-compiled"
-        ],
+        
         "post-update-cmd": [
             "php artisan optimize"
         ],

@@ -73,31 +73,21 @@ $sess_id= \Session::get('id');
 
           <div class="panel-body">
           <div class="scrollpart">
-<?php 
-foreach($get_rel as $religion)
-{
-	$r_id=$religion->religion_id;
-?>
- <input type="checkbox" class="search_filter" name="religion[]" value="<?php echo $religion->religion_id; ?>" > &nbsp;&nbsp;<label class="label-checkbox"><?php echo $religion->religion; ?></label><br>
+ 
+@foreach($get_rel as $religion)
+ <input type="checkbox" class="search_filter" name="religion[]" value="{{$religion->religion_id}}"><label class="label-checkbox">{{$religion->religion}}</label><br>
+<div class="sublist">
+@foreach($get_caste as $caste)
 
- <div class="sublist">
- <?php 
-foreach($get_caste as $caste)
-{
-	$rel_id=$caste->religion_id;
-	if($r_id==$rel_id)
-	{
-?>
- <input type="checkbox" class="search_filter" name="caste[]" value="<?php echo $caste->caste_id; ?>" > &nbsp;&nbsp; <label class="label-checkbox"><?php echo $caste->caste; ?></label><br>
- 
-    
- 
-<?php }}
-?>
+@if($religion->religion_id==$caste->religion_id)
+ <input type="checkbox" class="search_filter" name="caste[]" value="{{ $caste->caste_id }}" > &nbsp;&nbsp; <label class="label-checkbox">{{ $caste->caste}}</label><br>
+@endif
+@endforeach
+
  <input type="checkbox" class="search_filter" name="other_caste[]" value="other_caste" > &nbsp;&nbsp; <label class="label-checkbox">Other</label><br>
   
           </div>
-<?php } ?>
+@endforeach
 <br>
 
   <input type="checkbox" class="search_filter" name="other_religion[]" value="other_religion"  > &nbsp;&nbsp; <label class="label-checkbox">Other</label>

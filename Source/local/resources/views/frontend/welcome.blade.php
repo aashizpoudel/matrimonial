@@ -66,7 +66,7 @@
 										<input type="text" id="username" class="field" name="username" placeholder="Username">
 										<input type="password" id="password" class="field" name="password" placeholder="Password">
 										<input type="text" class="field" id="email" name="email" placeholder="Email">
-										<input type="text" class="field"  name="dob" id="datepicker" placeholder="Date of Birth"  data-field="date" readonly>
+										<input type="date" class="field"  name="dob" id="date" placeholder="Date of Birth">
 										<input type="text" class="field" id="phone" name="contact_num" placeholder="Phone Number" required> <br>
 										<div class="row">
 											<div class="col-sm-5">
@@ -158,7 +158,7 @@
 												}
 												?>
 										</select>
-										<input type="text" class="field"  name="dateob"  placeholder="Date of Birth"  data-field="date" readonly>
+										<input type="date" class="field"  name="dateob"  placeholder="Date of Birth"  data-field="date" >
 										<div class="row">
 											<div class="col-sm-5">
                                                 <input type="submit"  class="reg_frnt_btn" value="SEARCH"/>
