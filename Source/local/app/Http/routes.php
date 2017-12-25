@@ -31,9 +31,12 @@ Route::get('/', function () {
 
 
     $prf_result =  with(new dailyrecommendation)->highlightedprofile();
-
+    $log = \Session::get('is_logged');
+if(!$log){
    return View::make('frontend.welcome',array('profile'=>$prf_result));
-
+}else {
+  return redirect('user/search');
+}
 });
 
 
@@ -52,6 +55,8 @@ Route::get('print/', function () {
    return View::make('backend.download.print_user_report');
 
 });
+Route::get('user/desired-profiles','DesiredProfileController@showprofiles');
+Route::post('login-new','DesiredProfileController@postUser');
 
 Route::controller('user', 'userController');
 Route::controller('admin','adminController');

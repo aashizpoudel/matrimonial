@@ -1761,3 +1761,4 @@ div.dark_rounded #pp_full_res .pp_inline,div.dark_square #pp_full_res .pp_inline
 .letter-space-8{letter-spacing:8px !important;}
 .letter-space-9{letter-spacing:9px !important;}
 .letter-space-10{letter-spacing:10px !important;}
+.scrollpart {height: 165px;overflow-y: scroll;overflow-x: hidden;}
