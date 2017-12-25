@@ -4805,24 +4805,26 @@ public function anyChatAutocomplete()
         }
 
     
-    $query=\DB::table('user_profile')
-          ->leftJoin('user_reg', 'user_reg.id', '=', 'user_profile.user_id')
-            ->leftJoin('religion', 'religion.religion_id', '=', 'user_profile.religion')
-            ->leftJoin('caste', 'caste.caste_id', '=', 'user_profile.caste')
-            ->leftJoin('star', 'star.star_id', '=', 'user_profile.star')
-            ->leftJoin('rassi_moonsign','rassi_moonsign.rassimoonsign_id', '=', 'user_profile.rassi_moonsign')
-            ->leftJoin('zodiac_starsign', 'zodiac_starsign.zodiac_starsign_id', '=', 'user_profile.zodiac_starsign')
-            ->leftJoin('country', 'country.country_id', '=', 'user_profile.country_livingin')
-            ->leftJoin('state', 'state.state_id', '=', 'user_profile.state')
-            ->leftJoin('district', 'district.district_id', '=', 'user_profile.district')
-            ->leftJoin('mother_tongue', 'mother_tongue.mother_tongue_id', '=', 'user_profile.mother_tongue')
-            ->leftJoin('education', 'education.education_id', '=', 'user_profile.education')
-            ->leftJoin('occupation', 'occupation.occupation_id', '=', 'user_profile.occupation')
+    // $uery=\DB::table('user_profile')
+    //       ->leftJoin('user_reg', 'user_reg.id', '=', 'user_profile.user_id')
+    //         ->leftJoin('religion', 'religion.religion_id', '=', 'user_profile.religion')
+    //         ->leftJoin('caste', 'caste.caste_id', '=', 'user_profile.caste')
+    //         ->leftJoin('star', 'star.star_id', '=', 'user_profile.star')
+    //         ->leftJoin('rassi_moonsign','rassi_moonsign.rassimoonsign_id', '=', 'user_profile.rassi_moonsign')
+    //         ->leftJoin('zodiac_starsign', 'zodiac_starsign.zodiac_starsign_id', '=', 'user_profile.zodiac_starsign')
+    //         ->leftJoin('country', 'country.country_id', '=', 'user_profile.country_livingin')
+    //         ->leftJoin('state', 'state.state_id', '=', 'user_profile.state')
+    //         ->leftJoin('district', 'district.district_id', '=', 'user_profile.district')
+    //         ->leftJoin('mother_tongue', 'mother_tongue.mother_tongue_id', '=', 'user_profile.mother_tongue')
+    //         ->leftJoin('education', 'education.education_id', '=', 'user_profile.education')
+    //         ->leftJoin('occupation', 'occupation.occupation_id', '=', 'user_profile.occupation')
             
-            ->take(5)
-            ->get();
-
-         
+    //         ->take(5)
+    //         ->get();
+        $query = User_Reg::with(['matchuser'=>function($query){
+            $query->where('profile_strength','>',59);
+        }])->where('gender','=','male')
+                            ->paginate(5);
         // return $curr->user_profile();
         // return view('custom.profile',compact('curr'));
         // return $query;

@@ -11,8 +11,8 @@ class Match_User extends Model
      protected $primaryKey = 'user_id';
      public $incrementing =false;
 
-   
-         public function user_reg(){
-    	$this->hasOne('App\User_Reg','id');
-    	}
+   public function reguser(){
+       return $this->belongsTo('\App\User_Reg','user_id');
+   }
+        
 }

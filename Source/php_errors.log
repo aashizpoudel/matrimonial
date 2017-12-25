@@ -1,0 +1,21 @@
+[25-Dec-2017 14:53:45 UTC] PHP Fatal error:  Call to undefined method Illuminate\Database\Schema\Blueprint::int() in /home/ubuntu/workspace/projects/Source/local/database/migrations/2017_12_25_144905_create_dummies_table.php on line 18
+[25-Dec-2017 14:53:45 UTC] PHP Stack trace:
+[25-Dec-2017 14:53:45 UTC] PHP   1. {main}() /home/ubuntu/workspace/projects/Source/local/artisan:0
+[25-Dec-2017 14:53:45 UTC] PHP   2. Illuminate\Foundation\Console\Kernel->handle() /home/ubuntu/workspace/projects/Source/local/artisan:36
+[25-Dec-2017 14:53:45 UTC] PHP   3. Symfony\Component\Console\Application->run() /home/ubuntu/workspace/projects/Source/local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php:107
+[25-Dec-2017 14:53:45 UTC] PHP   4. Symfony\Component\Console\Application->doRun() /home/ubuntu/workspace/projects/Source/local/vendor/symfony/console/Application.php:114
+[25-Dec-2017 14:53:45 UTC] PHP   5. Symfony\Component\Console\Application->doRunCommand() /home/ubuntu/workspace/projects/Source/local/vendor/symfony/console/Application.php:190
+[25-Dec-2017 14:53:45 UTC] PHP   6. Illuminate\Console\Command->run() /home/ubuntu/workspace/projects/Source/local/vendor/symfony/console/Application.php:839
+[25-Dec-2017 14:53:45 UTC] PHP   7. Symfony\Component\Console\Command\Command->run() /home/ubuntu/workspace/projects/Source/local/vendor/laravel/framework/src/Illuminate/Console/Command.php:136
+[25-Dec-2017 14:53:45 UTC] PHP   8. Illuminate\Console\Command->execute() /home/ubuntu/workspace/projects/Source/local/vendor/symfony/console/Command/Command.php:239
+[25-Dec-2017 14:53:45 UTC] PHP   9. Illuminate\Container\Container->call() /home/ubuntu/workspace/projects/Source/local/vendor/laravel/framework/src/Illuminate/Console/Command.php:150
+[25-Dec-2017 14:53:45 UTC] PHP  10. call_user_func_array:{/home/ubuntu/workspace/projects/Source/local/vendor/laravel/framework/src/Illuminate/Container/Container.php:507}() /home/ubuntu/workspace/projects/Source/local/vendor/laravel/framework/src/Illuminate/Container/Container.php:507
+[25-Dec-2017 14:53:45 UTC] PHP  11. Illuminate\Database\Console\Migrations\MigrateCommand->fire() /home/ubuntu/workspace/projects/Source/local/vendor/laravel/framework/src/Illuminate/Container/Container.php:507
+[25-Dec-2017 14:53:45 UTC] PHP  12. Illuminate\Database\Migrations\Migrator->run() /home/ubuntu/workspace/projects/Source/local/vendor/laravel/framework/src/Illuminate/Database/Console/Migrations/MigrateCommand.php:74
+[25-Dec-2017 14:53:45 UTC] PHP  13. Illuminate\Database\Migrations\Migrator->runMigrationList() /home/ubuntu/workspace/projects/Source/local/vendor/laravel/framework/src/Illuminate/Database/Migrations/Migrator.php:85
+[25-Dec-2017 14:53:45 UTC] PHP  14. Illuminate\Database\Migrations\Migrator->runUp() /home/ubuntu/workspace/projects/Source/local/vendor/laravel/framework/src/Illuminate/Database/Migrations/Migrator.php:112
+[25-Dec-2017 14:53:45 UTC] PHP  15. CreateDummiesTable->up() /home/ubuntu/workspace/projects/Source/local/vendor/laravel/framework/src/Illuminate/Database/Migrations/Migrator.php:135
+[25-Dec-2017 14:53:45 UTC] PHP  16. Illuminate\Support\Facades\Schema::create() /home/ubuntu/workspace/projects/Source/local/database/migrations/2017_12_25_144905_create_dummies_table.php:22
+[25-Dec-2017 14:53:45 UTC] PHP  17. Illuminate\Support\Facades\Facade::__callStatic() /home/ubuntu/workspace/projects/Source/local/database/migrations/2017_12_25_144905_create_dummies_table.php:22
+[25-Dec-2017 14:53:45 UTC] PHP  18. Illuminate\Database\Schema\Builder->create() /home/ubuntu/workspace/projects/Source/local/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php:217
+[25-Dec-2017 14:53:45 UTC] PHP  19. CreateDummiesTable->{closure:/home/ubuntu/workspace/projects/Source/local/database/migrations/2017_12_25_144905_create_dummies_table.php:15-22}() /home/ubuntu/workspace/projects/Source/local/vendor/laravel/framework/src/Illuminate/Database/Schema/Builder.php:132
