@@ -129,6 +129,7 @@ $.ajaxSetup({
                <div class="row">
                   <div class="col-md-3">
                      <div class="logo"><a href="{{ URL::to('/') }}"> <img src="{{asset($logo)}}"/ ></a></div>
+                     
                   </div>
                   <div class="col-md-9">
                      <div class="indexheader"> </div>

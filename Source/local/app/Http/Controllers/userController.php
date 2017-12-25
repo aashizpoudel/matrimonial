@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
+use App\DesiredProfile;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Match_User ;
+use App\User_Reg ;
 use App\models\notification;
 use App\models\dailyrecommendation;
 use App\models\profilestrength;
@@ -46,6 +49,15 @@ class userController extends Controller
      * set unique username and email
      * email send
      */
+
+
+
+
+
+
+
+
+
    public function postUserregistration()
    {
         $cur_date= date("Y-m-d");
@@ -192,6 +204,7 @@ class userController extends Controller
               ->get();
         //var_dump($login);exit;
 
+        
          $payment=\Session::get('packageid');
         $paymentid= base64_encode($payment);
 
@@ -211,29 +224,29 @@ class userController extends Controller
             echo 9 ;
             return;
           }
-        $id = $value->id;
-        $username = $value->username;
-           $gender=$value->gender;
+          $id = $value->id;
+          $username = $value->username;
+          $gender=$value->gender;
 
-           $deactivation=$value->deactivate_status;
-       $deac_date=$value->deactivation_date;
-       $deac_days=$value->deactivate_days;
+          $deactivation=$value->deactivate_status;
+          $deac_date=$value->deactivation_date;
+          $deac_days=$value->deactivate_days;
 
-       \Session::put(['gender'=>$gender,'username'=>$username,'id'=>$id]);
-       $s_id=\Session::get('id');
+          \Session::put(['gender'=>$gender,'username'=>$username,'id'=>$id,'is_logged'=>true]);
+          $s_id=\Session::get('id');
 
-       $strength=\DB::table('user_profile')
+          $strength=\DB::table('user_profile')
                   ->where('user_id',$id)
                  ->where('profile_strength','>','59')
                  ->count();
 
 
-             if($remember==true)
-            {
-             $response = new \Illuminate\Http\Response('Soulmate');
-             $response->withCookie(cookie('soulmate', $id, 360));
-//return $response;
-              }
+            //  if($remember==true)
+            // {
+            //  $response = new \Illuminate\Http\Response('Soulmate');
+            //  $response->withCookie(cookie('soulmate', $id, 360));
+            //  // return $response;
+            //   }
 
               $online_status=\DB::table('user_reg')
              ->where('id',$id)
@@ -245,23 +258,23 @@ class userController extends Controller
          if($deactivation == 1)
          {
 
-        $deacdate = new Carbon($deac_date);
-    $today   = Carbon::now();
-    $date_deactivation = $deacdate->diff($today)->days;
+            $deacdate = new Carbon($deac_date);
+            $today   = Carbon::now();
+            $date_deactivation = $deacdate->diff($today)->days;
 
-      if($date_deactivation > $deac_days)
-         {
-          $deac_status=\DB::table('user_reg')
+            if($date_deactivation > $deac_days)
+              {
+                    $deac_status=\DB::table('user_reg')
                      ->where('id',$id)
                      ->update(['deactivate_status' =>0]);
 
-       }
-       else
-       {
+              }
+            else
+            {
 
 
-         echo 2;
-       }
+            echo 2; //useractivation
+            }
       }
     elseif($paymentid){
          //$pkg_id=base64_encode($pkg_id);
@@ -283,11 +296,11 @@ class userController extends Controller
              }
                else
                {
-          echo $get_pk_id;
+                    echo $get_pk_id;
                }
 
-       }
-     elseif($not_lg_id){
+          }
+              elseif($not_lg_id){
 
              $gendercheck=\DB::table('user_reg')
                             ->where('id',$not_lg_user)
@@ -313,7 +326,7 @@ class userController extends Controller
         {
           if($strength==0)
           {
-            echo 3;
+            echo 3; //go to profile complete screen
           }
           else
           {
@@ -334,6 +347,8 @@ class userController extends Controller
            echo 1;
          }*/
                 //  $u_status="";
+
+         //checking if payment status expired or not
                  if($u_status == 1)
                     {
 
@@ -350,7 +365,7 @@ class userController extends Controller
 
                                                  }
                                                  echo 1;
-                                                 }
+                  }
 
           }
 
@@ -365,7 +380,7 @@ class userController extends Controller
 
         else
         {
-          echo 0;
+          echo 0; //login failed
 
         }
 
@@ -555,6 +570,7 @@ class userController extends Controller
              $religious_info=\DB::table('user_profile')
                                     ->where('user_id', $id)
                                     ->insert($new_data);
+
                                   }
             else
             {
@@ -1461,6 +1477,9 @@ public function getDistrictupdates()
   }
 
 
+
+
+
   public function getSearch()
   {
         $id=\Session::get('id');
@@ -1755,10 +1774,6 @@ $intrstd_ppl_notification=\DB::table('notification')
 
 //desire partner preference
 
-
-
-
-
      public function getDpp()
    {
          $id= \Session::get('id');
@@ -1794,7 +1809,9 @@ $intrstd_ppl_notification=\DB::table('notification')
             // var_dump($daily_recommendation);exit;
           $profile_strength=with(new profilestrength)->profilestrength($id);
 
-     return View::make('frontend.dpp',array('users'=>$query,'results'=>$header_results,'recommendation'=>$daily_recommendation,'profile_str'=>$profile_strength));
+          $desired_profiles = \DB::table('desired_profiles')->where(['user_id'=>$id])->get();
+dd($desired_profiles);
+     return View::make('frontend.dpp',array('users'=>$query,'results'=>$header_results,'recommendation'=>$daily_recommendation,'profile_str'=>$profile_strength,'desired_profile'=>$desired_profiles));
          }
          else
          {
@@ -1827,15 +1844,69 @@ $intrstd_ppl_notification=\DB::table('notification')
 
 
     public function postUpdateBasicdetails()
-        {
+        { 
+
+
+
+ 
+
 
         $my_data=Input::all();
+       $new_data['body_type'] =$my_data['body_type'];
+       $new_data['complexion'] =$my_data['complexion'];
+       $new_data['height'] =$my_data['height'];
+       $new_data['physical_status'] =$my_data['physical_status'];
+       $new_data['weight'] =$my_data['weight'];
+       $new_data['marital_status'] =$my_data['marital_status'];
+       $new_data['eating_habits'] =$my_data['eating_habits'];
+       $new_data['eating_habits'] =$my_data['eating_habits'];
+       $new_data['drinking_habit'] =$my_data['drinking_habit'];
+       $new_data['smoking_habits'] =$my_data['smoking_habits'];
+       $new_data['name'] =$my_data['name'];
+       
+
        $id= \Session::get('id');
            $my_data['user_id'] = $id;
-
            $update_basicdetails=\DB::table('user_profile')
                                  ->where('user_id', $id)
-                                 ->update($my_data);
+                                 ->update($new_data);
+            if($update_basicdetails)
+        {
+               echo 1;
+        }
+              else
+          {
+             echo 0;
+            }
+        }
+
+         public function postUpdateBasicdetailsdp()
+        { 
+
+        $my_data=Input::all();
+        $new_data['body_type'] =$my_data['body_type'];
+       $new_data['complexion'] =$my_data['complexion'];
+       $new_data['height'] =$my_data['height'];
+       $new_data['physical_status'] =$my_data['physical_status'];
+       $new_data['weight'] =$my_data['weight'];
+       $new_data['marital_status'] =$my_data['marital_status'];
+       $new_data['eating_habits'] =$my_data['eating_habits'];
+       $new_data['eating_habits'] =$my_data['eating_habits'];
+       $new_data['drinking_habit'] =$my_data['drinking_habit'];
+       $new_data['smoking_habits'] =$my_data['smoking_habits'];
+       $new_data['name'] =$my_data['name'];
+       
+       $id= \Session::get('id');
+           $my_data['user_id'] = $id;
+           $age_to = $my_data['age_to'];
+           $new_data['age_to'] = $age_to;
+
+
+
+
+           $update_basicdetails=\DB::table('desired_profiles')
+                                 ->where('user_id', $id)
+                                 ->update($new_data);
 
             if($update_basicdetails)
 
@@ -1899,6 +1970,85 @@ $intrstd_ppl_notification=\DB::table('notification')
              echo 0;
             }
         }
+
+
+
+
+
+
+
+
+//returns the multiple values selected by users
+        
+function set_multiple_value($data_array,$name_of_variable){
+
+   $final_name_of_variable = "";
+   $name_of_variable = $name_of_variable;
+    $lenght_of_array = sizeof($data_array[$name_of_variable]);
+      for ($i=0; $i < $lenght_of_array; $i++) { 
+            $final_name_of_variable .= $data_array[$name_of_variable][$i];
+            if($i ==  $lenght_of_array-1 ){continue;}
+            $final_name_of_variable .= ",";
+          }
+        return $final_name_of_variable;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+         public function postUpdateReligiousinformationDpp()
+        {
+        $my_data=Input::all();
+
+        //var_dump($my_data);
+       $religion =  $this->set_multiple_value($my_data,"religion");
+       $caste =  $this->set_multiple_value($my_data,"caste");
+       $mother_tongue =  $this->set_multiple_value($my_data,"mother_tongue");
+             
+      $id= \Session::get('id');
+          $my_data['user_id'] = $id;
+
+             $new_data['religion']= $religion;
+             $new_data['caste']=$caste;
+            $new_data['mother_tongue']=$mother_tongue;
+        
+
+        // echo $relig;exit;
+          $editreligious_info=\DB::table('desired_profiles')
+                              ->where('user_id', $id)
+                              ->update($new_data);
+                             // ->update(['religion'=>$religion,'other_religion'=>$other_religion,'caste'=>$caste,'other_caste'=>$other_caste,'star'=>$star,'rassi_moonsign'=>$rasi,'zodiac_starsign'=>$zodiac]);
+
+          if($editreligious_info)
+            {
+             echo 1;
+            }
+            else
+          {
+             echo 0;
+            }
+        }
+
+
+
     public function postUpdateLocation()
         {
          $my_data=Input::all();
@@ -1938,6 +2088,43 @@ $intrstd_ppl_notification=\DB::table('notification')
              echo 0;
             }
         }
+
+
+
+          public function postUpdateProfessionalinfoDpp()
+        {
+        $my_data=Input::all();
+
+        $education =  $this->set_multiple_value($my_data,"education");
+        $occupation =  $this->set_multiple_value($my_data,"occupation");
+        $employed_in =  $this->set_multiple_value($my_data,"employed_in");
+        $new_data['education'] = $education;
+        $new_data['occupation'] = $occupation;
+        $new_data['employed_in'] = $employed_in;
+        $new_data['annual_income_from'] = $my_data['annual_income_from'];
+        $new_data['annual_income_to'] = $my_data['annual_income_to'];
+
+      $id= \Session::get('id');
+          $my_data['user_id'] = $id;
+
+           $prf_info=\DB::table('desired_profiles')
+                      ->where('user_id', $id)
+                      ->update($new_data);
+          if($prf_info)
+        {
+        echo 1;
+            }
+            else
+          {
+             echo 0;
+            }
+        }
+
+
+
+
+
+
     public function postUpdateFamilydetails()
         {
         $my_data=Input::all();
@@ -2015,6 +2202,63 @@ $intrstd_ppl_notification=\DB::table('notification')
       }
            }
     }
+
+
+
+public function getUpdateReligioncastedpp()
+
+    {
+
+
+      $my_data=Input::all();
+          $caste="";
+          $selected_caste = '';
+          $c = '';
+
+               if(isset($my_data['rel_val']))
+           {
+           $rel_val= $my_data['rel_val'];
+            $query = \DB::table('caste');
+            $attribute = [];
+//           foreach ($rel_val as $v) {
+//   # code...
+//               $c.=$v;
+//               $attribute[] = 
+
+//             }
+//             $query->where(function ($query) use ($attributes) 
+// {
+//     foreach ($attributes as $key=>$value)
+//     {
+//         //you can use orWhere the first time, dosn't need to be ->where
+//         $query->orWhere($key,$value);
+//     }
+// });
+                       $return_rel=$query->whereIn('religion_id',$rel_val)
+                                    ->get();
+
+
+      $caste.='<option></option>';
+      foreach($return_rel as $ret_caste)
+      {
+        $s = '';
+        if($ret_caste->caste_id == $selected_caste) {
+          $s = 'selected';
+        }
+        $caste.='<option '.$s.' value="'.$ret_caste->caste_id.'">'.$ret_caste->caste.'</option>';
+      }
+      if($return_rel)
+      {
+        echo $caste;
+        echo $c;
+      }
+      else
+        {
+        echo 0;
+      }
+           }
+    }
+
   public function getUpdateReligioncast()
 
     {
@@ -4547,5 +4791,73 @@ public function anyChatAutocomplete()
             }
 
         }
+
+
+      function getRandom(){
+        
+        $user_id=\Session::get('id');
+        $gender = \Session::get('gender'); 
+        $search_gender = '' ;   
+        if($gender =='male'){
+          $search_gender=='female';
+        }else {
+          $search_gender=='male';
+        }
+
+    
+    $query=\DB::table('user_profile')
+          ->leftJoin('user_reg', 'user_reg.id', '=', 'user_profile.user_id')
+            ->leftJoin('religion', 'religion.religion_id', '=', 'user_profile.religion')
+            ->leftJoin('caste', 'caste.caste_id', '=', 'user_profile.caste')
+            ->leftJoin('star', 'star.star_id', '=', 'user_profile.star')
+            ->leftJoin('rassi_moonsign','rassi_moonsign.rassimoonsign_id', '=', 'user_profile.rassi_moonsign')
+            ->leftJoin('zodiac_starsign', 'zodiac_starsign.zodiac_starsign_id', '=', 'user_profile.zodiac_starsign')
+            ->leftJoin('country', 'country.country_id', '=', 'user_profile.country_livingin')
+            ->leftJoin('state', 'state.state_id', '=', 'user_profile.state')
+            ->leftJoin('district', 'district.district_id', '=', 'user_profile.district')
+            ->leftJoin('mother_tongue', 'mother_tongue.mother_tongue_id', '=', 'user_profile.mother_tongue')
+            ->leftJoin('education', 'education.education_id', '=', 'user_profile.education')
+            ->leftJoin('occupation', 'occupation.occupation_id', '=', 'user_profile.occupation')
+            
+            ->take(5)
+            ->get();
+
+         
+        // return $curr->user_profile();
+        // return view('custom.profile',compact('curr'));
+        // return $query;
+          dd( $query);
+    }
+
+//function to get details of given user id
+  function getDetails($id){
+       $curr = \DB::table('user_profile')->where('user_id',$id)->get();
+       $data = [] ;
+       foreach ($curr as $user) {
+         # code...
+        $data['gender'] = \DB::table('user_reg')->where('id',$id )->get()->gender ;
+        $data['name'] = $user->name; 
+        $data['age'] = $user->age; 
+        $data['religion'] = $user->religion; 
+        $data['other_religion'] = $user->other_religion; 
+        $data['other_caste'] = $user->other_caste; 
+        $data['caste'] = $user->caste; 
+        $data['path'] = $user->path; 
+        $data['img_status'] = $user->img_status; 
+        $data['height'] = $user->height; 
+        $data['weight'] = $user->weight; 
+        $data['marital_status'] = $user->marital_status; 
+        $data['marital_status'] = $user->marital_status; 
+        $data['marital_status'] = $user->marital_status; 
+        $data['marital_status'] = $user->marital_status; 
+        $data['marital_status'] = $user->marital_status; 
+        $data['marital_status'] = $user->marital_status; 
+        $data['marital_status'] = $user->marital_status; 
+        $data['marital_status'] = $user->marital_status; 
+        $data['complexion'] = $user->complexion ;
+        $data['children'] = $user->children; 
+        $data['body_type'] = $user->body_type; 
+       }
+  }
 
 }

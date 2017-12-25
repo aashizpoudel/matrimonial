@@ -59,10 +59,11 @@ $sess_id= \Session::get('id');
 
 
                 }   
-  ?>
-@if ($s_religion ==1)
-  {{-- expr --}}
+     if($s_religion==1)   
+     {
 
+
+?>
 
       <div class="panel panel-default">
         <div id="headingOne" role="tab" class="panel-heading">
@@ -100,9 +101,9 @@ $sess_id= \Session::get('id');
      </div>
       
       </div>
-  @endif   
+      
      <?php
-   
+   }
     if($s_place==1)   
      {
    ?>

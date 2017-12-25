@@ -17,7 +17,7 @@
                         
 						<?php
  
-if(isset($_GET['attempt_failed'])) {
+if(isset($_GET['attempt_failed'])  || isset($error)) {
 	 
 	
 	 

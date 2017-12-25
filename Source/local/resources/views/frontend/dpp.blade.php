@@ -5,18 +5,90 @@
  $data1 = $results['login'];
   $sess= \Session::get('id');
   $get_religion=\ DB::table('religion')->get();
+  $get_caste= \DB::table('caste')->get();
   $get_star=\ DB::table('star')->get();
   $getzodiac_sign=\ DB::table('zodiac_starsign')->get();
   $get_country=\ DB::table('country')->get();
-  $get_mothr_tounge=\ DB::table('mother_tongue')->get();
+  $get_mother_tounge=\ DB::table('mother_tongue')->get();
   $get_education=\ DB::table('education')->get();
+  $get_occupation=\ DB::table('occupation')->get();
+
+  //desired_profile
+  foreach($desired_profile as $re){
+  	$desired_profile = $re ;
+  }
+  
+
+  $d_age_from = $desired_profile->age_from;
+  $d_age_to = $desired_profile->age_to;
+  $d_height_from = $desired_profile->height_from;
+  $d_height_to = $desired_profile->height_to;
+  $d_country = $desired_profile->country;
+  $d_country = explode(",", $d_country);
+
+  $d_religion = $desired_profile->religion;
+
+  $d_religion = explode(",", $d_religion);
+
+  $d_caste = $desired_profile->caste;
+   $d_caste = explode(",", $d_caste);
+  $d_mother_tongue = $desired_profile->mother_tongue;
+    $d_mother_tongue = explode(",", $d_mother_tongue);
+
+  $d_education = $desired_profile->education;
+    $d_education = explode(",", $d_education);
+  $d_occupation = $desired_profile->occupation;
+    $d_occupation = explode(",", $d_occupation);
+  $d_employed_in = $desired_profile->employed_in;
+  
+  $d_annual_income_from = $desired_profile->annual_income_from;
+  $d_annual_income_to = $desired_profile->annual_income_to;
+
+
    ?>
 
-@include('include.profile_header')
+   <?php 
+function show_multiple_data($get_table_name,$d_name,$select_row_id,$select_element){
+	$select_row_id = $select_row_id;
+	$select_element = $select_element;
 
+	foreach($get_table_name as $table_name){
+
+		for($i = 0; $i<sizeof($d_name); $i++){
+  			if($table_name->$select_row_id == $d_name[$i] ){ 
+     		 echo $table_name->$select_element." ";
+     		}
+  			}
+     	}
+	}
+
+
+?>
+
+@include('include.profile_header')
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+<script>
+
+
+	$(document).ready(function() {
+    $('.multiple_marital_status').select2({placeholder: "Select Some Options"});
+    $('.multiple_marital_status1').select2({placeholder: "Select Some Options"});
+    $('.multiple_country').select2({placeholder: "Select Some Options"});
+    $('.multiple_religion').select2({placeholder: "Select Some Options"});
+    $('.multiple_caste').select2();
+    $('.multiple_star').select2({placeholder: "Select Some Options"});
+    $('.multiple_mother_tongue').select2({placeholder: "Select Some Options"});
+    $('.multiple_raasi').select2({placeholder: "Select Some Options"});
+    $('.multiple_education').select2();
+    $('.multiple_employed').select2();
+    $('.multiple_occupation').select2();
+});
+</script>
 <link href="{{ asset ('assets/css/imageupload/main.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset ('assets/css/imageupload/jquery.Jcrop.min.css') }}" rel="stylesheet" type="text/css" />
  <meta name="_token" content="{!! csrf_token() !!}"/>
+
      <div class="myprfl-section2">
          <div class="bgimage"></div>
 	 </div>
@@ -217,8 +289,8 @@
 											<ul class="parent-list basicdetails_form">
 												<li>
 													<ul class="child-list">
-														<li class="first">Age</li>
-														<li class="second">:&nbsp;&nbsp;&nbsp;<?php echo $user->age; ?></li>
+														<li class="first">Age </li>
+														<li class="second">:&nbsp;&nbsp;&nbsp;{{ $d_age_from }}- {{ $d_age_to }} years of age</li>
 													</ul>
 												</li>
 												<li>
@@ -232,7 +304,7 @@
 
 												    ?>
 
-														<li class="second">:&nbsp;&nbsp;&nbsp;<?php echo $height; ?></li>
+														<li class="second">:&nbsp;&nbsp;&nbsp;{{ $d_height_from }}- {{ $d_height_to }}</li>
 													</ul>
 												</li>
 
@@ -274,27 +346,34 @@
               
 										<div class="row pdng25">
 											<div class="col-md-4">
-												Name :<br>
-												<input class="einput" type="text" name="name" id="name12" placeholder="Name" value="<?php echo $user->name; ?>">
+												Age :<br>
+												<Select class="eselect dda" name="age_from" id="age1">
+													<option value="">Height</option>
+
+
+
+												<?php 
+
+													for ($ft=4; $ft < 7; $ft++) { 
+														for($in=1; $in<12;$in++){
+															if($ft==4 && $in<5 ){
+																continue;
+															}
+
+														
+
+															$i =  floor(($ft*12+$in)*2.54);
+															$j =$ft."ft ".$in."in - ".$i."cm"; 
+																?>
+													
+                                             <option <?php if($user->height==$i){echo "selected='selected'";} ?>	value='<?php echo $i; ?>'> <?php echo $j; ?></option>
+                                             <?php 
+                                               } }
+                                               ?>		
+												</Select>
 											</div>
-
-											<div class="col-md-2">
-												<select  class="edrop dda" id="visibility_name" onchange="common_value()">
-													<option value="1">Public</option>
-                                                    <option value="0">Private</option>
-												</select>
-											</div>
-
-											
-										</div>
-
-
-										<div class="row pdng25">
-											
-
-											<div class="col-md-4">
-												Height :<br>
-												<Select class="eselect dda" name="height" id="height">
+											<div class="col-md-4"><br>
+												<Select class="eselect dda" name="age_to" id="age2">
 													<option value="">Height</option>
 
 
@@ -320,20 +399,95 @@
 												</Select>
 											</div>
 
-											<div class="col-md-2">
-												<select  class="edrop dda" id="visibility_height" onchange="common_value()">
-													 <option value="1" >Public</option>
-                                                     <option value="0">Private</option>
+											
+
+											
+										</div>
+
+										<div class="row pdng25">
+											<div class="col-md-4">
+												Height :<br>
+												<Select class="eselect dda" name="height_from" id="height">
+													<option value="">Height</option>
+
+
+
+												<?php 
+
+													for ($ft=4; $ft < 7; $ft++) { 
+														for($in=1; $in<12;$in++){
+															if($ft==4 && $in<5 ){
+																continue;
+															}
+
+														
+
+															$i =  floor(($ft*12+$in)*2.54);
+															$j =$ft."ft ".$in."in - ".$i."cm"; 
+																?>
+													
+                                             <option <?php if($user->height==$i){echo "selected='selected'";} ?>	value='<?php echo $i; ?>'> <?php echo $j; ?></option>
+                                             <?php 
+                                               } }
+                                               ?>		
+												</Select>
+											</div>
+											<div class="col-md-4"><br>
+												<select class="eselect dda" name="height_to" id="height1">
+													<option value="">Height</option>
+
+
+
+												<?php 
+
+													for ($ft=4; $ft < 7; $ft++) { 
+														for($in=1; $in<12;$in++){
+															if($ft==4 && $in<5 ){
+																continue;
+															}
+
+														
+
+															$i =  floor(($ft*12+$in)*2.54);
+															$j =$ft."ft ".$in."in - ".$i."cm"; 
+																?>
+													
+                                             <option <?php if($user->height==$i){echo "selected='selected'";} ?>	value='<?php echo $i; ?>'> <?php echo $j; ?></option>
+                                             <?php 
+                                               } }
+                                               ?>		
 												</select>
+											</div>
+		
+										</div>
+
+									<div class="row pdng25">
+											<div class="col-md-6">
+												Country :<br>
+												<select class="multiple_country eselect dda" type="text" name="country_livingin[]" id="country_id" multiple="multiple" style="width: 92%;"  >
+												  <?php
+                                                     foreach($get_country as $getcountry)
+                                                     {
+													 $select = '';
+													  if($getcountry->country_id == $user->country_id)
+													    {
+												      $select = "selected";
+													    }
+													 ?>
+													 
+                                             <option <?php echo $select; ?> value="<?php echo $getcountry->country_id; ?>"> <?php echo $getcountry->country; ?></option>
+													 <?php 
+													  }
+													  ?>
+                                             </select>
 											</div>
 										</div>
 
 
-
 										<div class="row pdng25">
-											<div class="col-md-4">
+											<div class="col-md-6">
 												Maritial Status :<br>
-												<Select class="eselect dda" type="text" name="marital_status" id="marital_status">
+												<select class="multiple_marital_status eselect dda" type="text" name="marital_status[]" id="marital_status" multiple="multiple" style="width: 92%;" >
 												 <option <?php if($user->marital_status=='Never Married'){echo "selected='selected'";}?>>Never Married</option>
                                                 <option	<?php if($user->marital_status=='Widower'){echo "selected='selected'";}?>>Widower</option>
                                                 <option	<?php if($user->marital_status=='Divorced'){echo "selected='selected'";}?>>Divorced</option>
@@ -341,72 +495,12 @@
                                              </select>
 											</div>
 
-											<div class="col-md-2">
-												<select  class="edrop dda" id="visibility_marital_status" onchange="common_value()">
-													 <option value="1" >Public</option>
-                                                     <option value="0">Private</option>
-												</select>
-											</div>
-
-											<div class="col-md-4">
-												Eating Habits :<br>
-												<Select class="eselect dda" name="eating_habits" id="eating_habits">
-
-												 <option <?php if($user->eating_habits=='Vegetarian'){echo "selected='selected'";}?>>Vegetarian</option>
-                                                <option	<?php if($user->eating_habits=='Non Vegetarian'){echo "selected='selected'";}?>>Non Vegetarian</option>
-                                                <option	<?php if($user->eating_habits=='Eggetarian'){echo "selected='selected'";}?>>Eggetarian</option>
-                                             </Select>
-											</div>
-
-											<div class="col-md-2">
-												<select  class="edrop dda" id="visibility_eating_habits" onchange="common_value()">
-													 <option value="1" >Public</option>
-                                                     <option value="0">Private</option>
-												</select>
-											</div>
 										</div>
 
-										<div class="row pdng25">
-											<div class="col-md-4">
-												Drinking Habbits :<br>
-												<Select class="eselect dda" name="drinking_habit">
-												 <option <?php if($user->drinking_habit=='No'){echo "selected='selected'";}?>>No</option>
-                                                <option	<?php if($user->drinking_habit=='Drinks Socially'){echo "selected='selected'";}?>>Drinks Socially</option>
-                                                <option	<?php if($user->drinking_habit=='Yes'){echo "selected='selected'";}?>>Yes</option>
-                                             </Select>
-											</div>
-
-											<div class="col-md-2">
-												<select  class="edrop dda" id="visibility_drinking_habits" onchange="common_value()">
-													<option value="1" >Public</option>
-                                                    <option value="0">Private</option>
-												</select>
-											</div>
-
-											<div class="col-md-4">
-												Smoking Habbits :<br>
-												<Select class="eselect dda" name="smoking_habits" id="smoking_habits">
-												 <option <?php if($user->smoking_habits=='No'){echo "selected='selected'";}?>>No</option>
-                                                <option	<?php if($user->smoking_habits=='Occasionally'){echo "selected='selected'";}?>>Occasionally</option>
-                                                <option	<?php if($user->smoking_habits=='Yes'){echo "selected='selected'";}?>>Yes</option>
-                                             </select>
-											</div>
-
-											<div class="col-md-2">
-												<select  class="edrop dda" id="visibility_smoking_habits" onchange="common_value()">
-													<option value="1" >Public</option>
-                                                    <option value="0">Private</option>
-												</select>
-											</div>
-										</div>
 										<div class="row pdng25">
 											<input type="submit" class="sbt-btn" value="Submit" id="basic_details">
 											<input type="submit" value="Cancel">
 										</div>
-
-
-
-
 
 										<hr class="hbar">
 											</form>
@@ -425,64 +519,44 @@
 											<ul class="parent-list religious_info_details">
 												<li>
 													<ul class="child-list">
-														<li class="first">Religion</li>
-														<li class="second">:&nbsp;&nbsp;&nbsp;<?php if($user->religion==""){ echo $user->other_religion;}else {echo $user->religion;} ?></li>
+														<li class="first">Religion </li>
+
+
+
+
+
+
+
+														<li class="second">:&nbsp;&nbsp;&nbsp;<?php if($user->religion==""){ echo $user->other_religion;}else { 
+
+
+												show_multiple_data($get_religion,$d_religion,"religion_id","religion");
+														
+													
+                                                  }
+                                              
+                                                  ?>
+                                       </li>
 													</ul>
 												</li>
-												<li>
-													<ul class="child-list">
-														<li class="first">Caste</li>
-														<li class="second">:&nbsp;&nbsp;&nbsp;<?php if($user->caste==""){echo $user->other_caste;}else {echo $user->caste;} ?></li>
-													</ul>
-												</li>
+										<li>
+											<ul class="child-list">
+												<li class="first">Caste </li>
+												<li class="second">:&nbsp;&nbsp;&nbsp;<?php if($user->caste==""){echo $user->other_caste;}else {show_multiple_data($get_caste,$d_caste,"caste_id","caste");
+										} ?></li>
+											</ul>
+										</li>
 
 												<li>
 													<ul class="child-list">
 														<li class="first">Mother Tongue</li>
-														<li class="second">:&nbsp;&nbsp;&nbsp;<?php echo $user->mother_tongue; ?></li>
+														<li class="second">:&nbsp;&nbsp;&nbsp;<?php show_multiple_data($get_mother_tounge,$d_mother_tongue,"mother_tongue_id","mother_tongue"); ?></li>
 													</ul>
 												</li>
 
-												<li>
-													<ul class="child-list">
-														 <?php
-                                                   
-                                                     foreach($users as $trial)
-                                                       {
-								                      $star=$trial->star;
-						                               }
-						                              
-						                              if($star!="")
-							                             {
-								                          
-								                          ?>
-														<li class="first">Star</li>
-														<li class="second">:&nbsp;&nbsp;&nbsp;<?php echo $user->star; ?></li>
-														<?php
-							                              }
-							                             ?>
-													</ul>
-												</li>
 												
-												<li>
-													<ul class="child-list">
-
-												  <?php
-                                              foreach($users as $trial)
-                                                  {
-								               $zodiac_starsign=$trial->zodiac_starsign;
-						                          }
-						                       if($zodiac_starsign!="")
-						                        {
-								                ?>		
-														<li class="first">Zodiac Star Sign</li>
-														<li class="second">:&nbsp;&nbsp;&nbsp;<?php echo $trial->zodiac_starsign; ?></li>
-
-												 <?php
-							                         }
-							                        ?>		
-													</ul>
-												</li>
+												
+												
 											</ul>
 
 
@@ -495,18 +569,18 @@
 									<div class="prof-sec" id="location_hide" style="display:none">
                                       <form class="form-class"  id="loctnform">
 
-										
-
 										<div class="row pdng25">
 											<div class="col-md-4">
 												Religion :<br>
-												<Select class="eselect dda others" name="religion" id="religion_id">
+												<select class="multiple_religion eselect dda others" name="religion[]" id="religion_id" multiple="multiple" style="width: 100%" >
 												    <?php
                                             
                                                 foreach($get_religion as $getrel)
                                                   {
                                                  $s = '';
-					                              if($getrel->religion_id == $user->religion_id) 
+                                                 $i = 0;
+					                              if($getrel->religion_id == $d_religion[$i])
+					                              $i++; 
 					                                 {
 						                           $s = "selected";
 						                             }
@@ -517,209 +591,38 @@
                                                 ?>			 
                                                 <option value="other_religion" >Others</option>
                                              </select>
-                                              <input type="text" id="rii" class="user_reg other_lable einput" name="other_religion">
 											</div>
 
-											<div class="col-md-2">
-												<select  class="edrop dda" id="visibility_religion" onchange="common_value()">
-													<option value="1" >Public</option>
-                                                    <option value="0">Private</option>
-												</select>
-											</div>
-											<div class="col-md-4">
-												Caste :<br>
-												 <img src="{{asset('assets/images/loading3.gif')}}" class='loader'>
-												<Select class="eselect dda Other user_caste" name="caste" id="ce">
-												<option value="<?php echo $user->caste_id; ?>"><?php echo $user->caste; ?></option>
-                                             <option value="other_caste">Others</option>
-                                          </select>
-                                          <input type="text" id="otrs" class="user_reg1 other_lable einput" name="other_caste">
-											</div>
-
-											<div class="col-md-2">
-												<select  class="edrop dda" id="visibility_caste" onchange="common_value()">
-													       <option value="1" >Public</option>
-                                                           <option value="0">Private</option>
-												</select>
-											</div>
+											
+											
+											
 										</div>
 
-										<div class="row pdng25">
-											<div class="col-md-4">
-												Star :<br>
-												<Select class="eselect dda other_star" name="star" id="star_id">
-												 <?php
-                                            
-                                                foreach($get_star as $getstr)
-                                                  {
-                                                $select = '';
-                                                 if($getstr->star_id == $user->star_id) 
-                                                    {
-                                                $select = "selected";
-                                                    }
-                                                
-                                                  ?>
-                                             <option <?php echo $select; ?> value="<?php echo $getstr->star_id; ?>"><?php echo $getstr->star; ?></option>
-                                             <?php 
-                                                } 
-                                                ?>
-                                                <option value="other_star">Others</option>
-                                                
-                                             </select>
-											</div>
-
-											<div class="col-md-2">
-												<select  class="edrop dda" id="visibility_star" onchange="common_value()">
-													 <option value="1" >Public</option>
-                                                     <option value="0">Private</option>
-												</select>
-											</div>
-											<div class="col-md-4">
-												Raasi :<br>
-												<Select class="eselect dda other_moonsign user_rassi" name="rassi_moonsign" id="rms">
-												  <option value="<?php echo $user->rassimoonsign_id; ?>"><?php echo $user->rassi_moonsign; ?></option>	
-						                          <option value="other_moonsign">Others</option>
-                                               </select>
-											</div>
-
-											<div class="col-md-2">
-												<select  class="edrop dda" id="visibility_rasi" onchange="common_value()">
-													  <option value="1" >Public</option>
-                                                      <option value="0">Private</option>
-												</select>
-											</div>
-										</div>
-
-										<div class="row pdng25">
-											<div class="col-md-4">
-												Zodiac :<br>
-												<Select class="eselect dda other_Zodiac" name="zodiac_starsign" id="zss">
-												<?php
-                                           
-                                                foreach($getzodiac_sign as $zodiacsign)
-                                                {
-                                                $select = '';
-                                                 if($zodiacsign->zodiac_starsign_id == $user->zodiac_starsign_id)
-                                                  {
-                                                $select = "selected";
-                                                  }
-                                                  ?>	
-                                             <option <?php echo $select; ?> value="<?php echo $zodiacsign->zodiac_starsign_id; ?>"><?php echo $zodiacsign->zodiac_starsign; ?></option>
-                                             <?php 
-                                                }  
-                                                ?>	 	  
-                                              
-                                                
-                                             </select>
-											</div>
-
-											<div class="col-md-2">
-												<select  class="edrop dda" id="visibility_zodiac" onchange="common_value()">
-													 <option value="1" >Public</option>
-                                                     <option value="0">Private</option>
-												</select>
-											</div>
-											<div class="col-md-4">
-
-											</div>
-
-											<div class="col-md-2">
-
-											</div>
-										</div>
-
-										<div class="row pdng25">
-											<input type="submit" class="sbt-btn" id="regg1" value="submit">
-											<input type="submit" value="Cancel">
-										</div>
+							<div class="row pdng25">
 
 
-										<hr class="hbar">
-									</form>
+									<div class="col-md-4">
+									Caste :<br>
+									<img src="{{asset('assets/images/loading3.gif')}}" class='loader'>
+									<select class="multiple_caste eselect dda Other user_caste" name="caste[]" id="ce" multiple="multiple" style="width: 100%" >
+									<option value="<?php echo $user->caste_id; ?>"><?php echo $user->caste; ?></option>
+									<option value="other_caste">Others</option>
+									</select>
+									
 									</div>
-									<!--end rel edit form-->
 
-                               
 
-                                  
-									<div class="prof-sec">
-										<div class="head-edit">
-											<div class="head-icon"><img src="{{ asset('assets/images/img4.png') }}"></div>
-											<div class="head-txt"><h2>Location Information</h2></div>
-											<button class="head-edit-icon edit_location"></button>
-										</div>
-										<div class="row">
-											<div class="col-md-12">
-											<ul class="parent-list location_details">
-												<li>
-													<ul class="child-list">
-														<li class="first">Country</li>
-														<li class="second">:&nbsp;&nbsp;&nbsp;<?php echo $user->country; ?></li>
-													</ul>
-												</li>
-												<li>
-													<ul class="child-list">
-														<li class="first">Mother Tongue</li>
-														<li class="second">:&nbsp;&nbsp;&nbsp;<?php echo $user->mother_tongue; ?></li>
-													</ul>
-												</li>
-												<li>
-													<ul class="child-list">
-														<li class="first">Residing State</li>
-														<li class="second">:&nbsp;&nbsp;&nbsp;<?php echo $user->state; ?></li>
-													</ul>
-												</li>
-												<li>
-													<ul class="child-list">
-														<li class="first">District</li>
-														<li class="second">:&nbsp;&nbsp;&nbsp;<?php echo $trial->district; ?></li>
-													</ul>
-												</li>
-											</ul>
-											</div>
-										</div>
-										<hr class="hbar">
-									</div>
-                                 <!--start edit location form-->
-                                  <form class="form-class"  id="lctndetails-form">
-                                 <div class="prof-sec" id="loctn_hide" style="display:none">
 
-                                 	
+							</div>
+
 										
+
 										<div class="row pdng25">
-											<div class="col-md-4">
-												Country :<br>
-												<Select class="eselect dda other_country_livingin test_class" name="country_livingin" id="country_id">
-												 <?php
-                                                     foreach($get_country as $getcountry)
-                                                     {
-													 $select = '';
-													  if($getcountry->country_id == $user->country_id)
-													    {
-												      $select = "selected";
-													    }
-													 ?>
-													 
-                                             <option <?php echo $select; ?> value="<?php echo $getcountry->country_id; ?>"> <?php echo $getcountry->country; ?></option>
-													 <?php 
-													  }
-													  ?>
-                                                
-                                             </select>
-
-											</div>
-
-											<div class="col-md-2">
-												<select  class="edrop dda" id="visibility_country" onchange="common_value()">
-												   <option value="1" >Public</option>
-                                                   <option value="0">Private</option>
-												</select>
-											</div>
 											<div class="col-md-4">
 												Mother Tongue :<br>
-												<Select class="eselect dda" name="mother_tongue" id="mother_tongue">
+												<select class=" multiple_mother_tongue eselect dda" name="mother_tongue[]" id="mother_tongue" multiple="multiple" style="width: 100%;">
 												  <?php
-                                                 foreach($get_mothr_tounge as $get_mother_tounge)
+                                                 foreach($get_mother_tounge as $get_mother_tounge)
                                                      {
 													 $s = '';
 													 if($get_mother_tounge->id == $user->mother_tongue_id)
@@ -734,56 +637,20 @@
                                              </select>
 											</div>
 
-											<div class="col-md-2">
-												<select  class="edrop dda" id="visibility_mother_tongue" onchange="common_value()">
-													  <option value="1" >Public</option>
-                                                      <option value="0">Private</option>
-												</select>
-											</div>
+											
 										</div>
-										<div class="row pdng25">
-											<div class="col-md-4">
-												Residing State :<br>
-												 <img src="{{asset('assets/images/loading3.gif')}}" class='loader_state'>
-												<Select class="eselect dda user_state test_class" name="state" id="state_id">
-												 <option value="<?php echo $user->state_id; ?>"><?php echo $user->state; ?></option>
-                                                </select>
-											</div>
 
-											<div class="col-md-2">
-												<select  class="edrop dda" id="visibility_state" onchange="common_value()">
-													<option value="1" >Public</option>
-                                                    <option value="0">Private</option>
-												</select>
-											</div>
-											<div class="col-md-4">
-												District :<br>
-												<Select class="eselect dda user_district test_class" name="district" id="rc">
-												   <option value="<?php echo $user->district_id; ?>"><?php echo $user->district; ?></option>
-												</Select>
-											</div>
-
-											<div class="col-md-2">
-												<select  class="edrop dda" id="visibility_district" onchange="common_value()">
-													<option value="1" >Public</option>
-                                                    <option value="0">Private</option>
-												</select>
-											</div>
-										</div>
 										<div class="row pdng25">
-											<input type="submit" id="loc_dtls" class="sbt-btn" value="submit">
+											<input type="submit" class="sbt-btn" id="regg1" value="submit">
 											<input type="submit" value="Cancel">
 										</div>
 
+
 										<hr class="hbar">
-
-								
+									</form>
 									</div>
-										</form>
+									<!--end rel edit form-->
 
-									<!--end edit location form-->
-
-                                
 
 
 									<div class="prof-sec">
@@ -798,7 +665,7 @@
 												<li>
 													<ul class="child-list">
 														<li class="first">Education</li>
-														<li class="second">:&nbsp;&nbsp;&nbsp;<?php echo $user->education; ?></li>
+														<li class="second">:&nbsp;&nbsp;&nbsp;<?php show_multiple_data($get_education,$d_education,"education_id","education"); ?></li>
 													</ul>
 												</li>
 												
@@ -806,14 +673,14 @@
 												<li>
 													<ul class="child-list">
 														<li class="first">Occupation</li>
-														<li class="second">:&nbsp;&nbsp;&nbsp;<?php echo $user->occupation; ?></li>
+														<li class="second">:&nbsp;&nbsp;&nbsp;<?php show_multiple_data($get_occupation,$d_occupation,"occupation_id","occupation"); ?></li>
 													</ul>
 												</li>
 												
 												<li>
 													<ul class="child-list">
 														<li class="first">Employed In</li>
-														<li class="second">:&nbsp;&nbsp;&nbsp;<?php echo $user->employedin; ?></li>
+														<li class="second">:&nbsp;&nbsp;&nbsp;<?php echo $d_employed_in; ?></li>
 													</ul>
 												</li>
 												<li>
@@ -834,9 +701,9 @@
 										<form class="form-class"  id="profesional_info_form">
 										
 										<div class="row pdng25">
-											<div class="col-md-4">
+											<div class="col-md-6">
 												Education :<br>
-												<Select class="eselect dda other_education" name="education" id="educationfield_id">
+												<select class="multiple_education eselect dda other_education" name="education[]" id="educationfield_id" multiple="multiple" style="width: 100%;" >
 												         <?php
                                                 foreach($get_education as $geteduca)
                                                   {
@@ -853,73 +720,30 @@
                                                 ?>  
                                                 <option value="other_education">Other</option>
                                              </select>
-                                             <input type="text" name="other_education" class="user_reg9 other_lable">   
+                                             
 											</div>
+											</div>
+										<div class="row pdng25">
 
-											<div class="col-md-2">
-												<select  class="edrop dda" id="visibility_education" onchange="common_value()">
-													<option value="1" >Public</option>
-                                                    <option value="0">Private</option>
-												</select>
-											</div>
-											<div class="col-md-4">
+											<div class="col-md-6">
 												Occupation :<br>
 												<img src="{{asset('assets/images/loading3.gif')}}" class='loader_occupation'>
-												<Select class="eselect dda user_occupation" name="occupation" id="occ">
+												<select class="multiple_occupation eselect dda user_occupation" name="occupation[]" id="occ" multiple="multiple" style="width: 100%" >
 												  <option value="<?php echo $user->occupation_id; ?>"><?php echo $user->occupation; ?></option>
                                                   <option value="other_occupation">Other</option>
-												</Select>
-												<input type="text" name="other_occupation" class="user_reg10 other_lable">     
+												</select>
+												     
 											</div>
 
-											<div class="col-md-2">
-												<select  class="edrop dda" id="visibility_occupation" onchange="common_value()">
-													           <option value="1" >Public</option>
-                                                               <option value="0">Private</option>
-												</select>
-											</div>
+										
 										</div>
+										
 										<div class="row pdng25">
-											<div class="col-md-4">
-												College :<br>
-												<input class="einput" type="text" name="college" id="Clg" placeholder="College Institution" value="<?php echo $user->college; ?>"> 
-
-											</div>
-
-											<div class="col-md-2">
-												<select  class="edrop dda" id="visibility_college" onchange="common_value()">
-													 <option value="1" >Public</option>
-                                                      <option value="0">Private</option>
-												</select>
-											</div>
-											<div class="col-md-4">
-												Education in Detail :<br>
-												<input class="einput" type="text" name="education_in_detail"  id="education_in_detail" placeholder="Education in Detail" value="<?php echo $user->education_in_detail; ?>">
-
-											</div>
-
-											<div class="col-md-2">
-												<select  class="edrop dda" id="visibility_education_in_detail" onchange="common_value()">
-													<option value="1" >Public</option>
-                                                    <option value="0">Private</option>
-												</select>
-											</div>
-										</div>
-										<div class="row pdng25">
-											<div class="col-md-4">
-												Occupation in Detail :<br>
-												<input class="einput" type="text" name="occupation_in_detail"  id="occupation_in_detail" placeholder="Occupation in Detail" value="<?php echo $user->occupation_in_detail; ?>">
-											</div>
-
-											<div class="col-md-2">
-												<select  class="edrop dda" id="visibility_occupation_in_detail" onchange="common_value()">
-													<option value="1" >Public</option>
-                                                    <option value="0">Private</option>
-												</select>
-											</div>
-											<div class="col-md-4">
+											
+										
+											<div class="col-md-6">
 												Employed in:<br>
-												<select class="eselect dda" type="text" name="employedin" id="empi" placeholder="Employed in">
+												<select class="multiple_employed eselect dda" type="text" name="employed_in[]" id="empi" placeholder="Employed in" multiple="multiple" style="width: 100%" >
 												  <option	value="Government">Government</option>
                                                 <option	value="Private">Private</option>
                                                 <option	value="Business">Business</option>
@@ -928,29 +752,26 @@
 												</select>
 											</div>
 
-											<div class="col-md-2">
-												<select  class="edrop dda" id="visibility_employed_in" onchange="common_value()">
-													<option value="1" >Public</option>
-                                                    <option value="0">Private</option>
-												</select>
-											</div>
+										
 										</div>
 										<div class="row pdng25">
-										<div class="col-md-4">
+										<div class="col-md-6">
 												Annual Income(/Monthly):<br>
-												<select class="eselect dda" type="text" name="annual_income" id="auli" placeholder="Annual Income">
+												<select class="eselect dda" type="text" name="annual_income_from" id="auli1" placeholder="Annual Income">
 												  <option  <?php if($user->annual_income=='below 100000'){echo "selected='selected'";}?>>Below 1,00,000/-</option>                                        
                                         <option    <?php if($user->annual_income=='100000-200000'){echo "selected='selected'";}?>>1,00,000-2,00,000/-</option>
                                             <option <?php if($user->annual_income=='above 200000'){echo "selected='selected'";}?>>2,00,000 above</option>   			
                                           </select>
 											</div>
-
-											<div class="col-md-2">
-												<select  class="edrop dda" id="visibility_annual_income"  onchange="common_value()">
-													<option value="1" >Public</option>
-                                                    <option value="0">Private</option>
-												</select>
+										<div class="col-md-6">
+												<br>
+												<select class="eselect dda" type="text" name="annual_income_to" id="auli2" placeholder="Annual Income">
+												  <option  <?php if($user->annual_income=='below 100000'){echo "selected='selected'";}?>>Below 1,00,000/-</option>                                        
+                                        <option    <?php if($user->annual_income=='100000-200000'){echo "selected='selected'";}?>>1,00,000-2,00,000/-</option>
+                                            <option <?php if($user->annual_income=='above 200000'){echo "selected='selected'";}?>>2,00,000 above</option>   			
+                                          </select>
 											</div>
+											
 										</div>
 										
 										
@@ -1144,968 +965,10 @@ $(function () {
 						
       </script>
  
-   <script>
-   $(document).ready(function() {
-          $('.test_class').select2();
-   	  
-   			  $('#rii').hide();
-    
-                   $(".others").change(function () {
-   	                   var others = $(".others").val();
-                                   if(others == 'other_religion'){
-                          $('#rii').show();
-                              }else{
-   	          $('#rii').hide(); 
-   			
-                          }
-                          });
-   			  
-   			  $('#otrs').hide();
-    
-                   $(".Other").change(function(){
-   	                   var Other = $(".Other").val();
-                                   if(Other == 'other_caste'){
-                          $('#otrs').show();
-                              }else{
-   	          $('#otrs').hide(); 
-   			  //$('#otrs').val(Other);
-                          }
-                          });
-   			  
-   			 
-   			  
-   			  $('.user_reg2').hide();
-    
-                   $(".other_star").change(function () {
-   	                   var other_star = $(".other_star").val();
-                                   if( other_star == 'other_star'){
-                          $('.user_reg2').show();
-                              }else{
-   	          $('.user_reg2').hide(); 
-   			 // $('.user_reg2').val(other_star);
-                          }
-                          });
-   			  
-   			  
-   			  
-   			  $('.user_reg3').hide();
-    
-                   $(".other_moonsign").change(function () {
-   	                   var other_moonsign = $(".other_moonsign").val();
-                                   if( other_moonsign == 'other_moonsign'){
-                          $('.user_reg3').show();
-                              }else{
-   	          $('.user_reg3').hide(); 
-   			 // $('.user_reg3').val(other_moonsign);
-                          }
-                          });
-   			  
-   			  
-   			  $('.user_reg4').hide();
-    
-                   $(".other_Zodiac").change(function () {
-   	                   var other_Zodiac = $(".other_Zodiac").val();
-                                   if( other_Zodiac == 'other_Zodiac'){
-                          $('.user_reg4').show();
-                              }else{
-   	          $('.user_reg4').hide(); 
-   			  //$('.user_reg4').val(other_Zodiac);
-                          }
-                          });
-   			   $('.user_reg5').hide();					    
-   				$(".other_country_livingin").change(function(){
-   					  var other_country_livingin = $(".other_country_livingin").val();
-   					  if(other_country_livingin == 'other_country_livingin'){
-   			   $('.user_reg5').show();
-   					  }else{
-   			   $('.user_reg5').hide();
-                          // $('.user_reg5').val(other_country_livingin);						   
-   					  }						   
-   					});  
-   					
-   					
-   					$('.user_reg6').hide();
-   					$(".other_citizenship").change(function(){
-   					  var other_citizenship = $(".other_citizenship").val();
-   					  if(other_citizenship == 'other_citizenship'){
-   			   $('.user_reg6').show();
-   					  }else{
-   			   $('.user_reg6').hide();
-                           //$('.user_reg6').val(other_citizenship);						   
-   					  }						   
-   					});  
-   					
-   					
-   			  $('.user_reg7').hide();
-   					$(".other_residing_state").change(function(){
-   					  var other_residing_state = $(".other_residing_state").val();
-   					  if(other_residing_state == 'other_residing_state'){
-   			   $('.user_reg7').show();
-   					  }else{
-   			   $('.user_reg7').hide();
-                           //$('.user_reg7').val(other_residing_state);						   
-   					  }						   
-   					});  
-   					
-   					$('.user_reg8').hide();
-   					$(".other_residing_city").change(function(){
-   					  var other_residing_city = $(".other_residing_city").val();
-   					  if(other_residing_city == 'other_residing_city'){
-   			   $('.user_reg8').show();
-   					  }else{
-   			   $('.user_reg8').hide();
-                           //$('.user_reg8').val(other_residing_city);						   
-   					  }						   
-   					}); 
-   					
-   ////////////////////////////////////////professional information///////////////////////////////////								
-   					$('.user_reg9').hide();
-   					$(".other_education").change(function(){
-   					  var other_education = $(".other_education").val();
-   					  if(other_education == 'other_education'){
-   			   $('.user_reg9').show();
-   					  }else{
-   			   $('.user_reg9').hide();
-                          // $('.user_reg9').val(other_education);						   
-   					  }						   
-   					}); 
-   					
-   					
-   					$('.user_reg10').hide();
-   					$(".other_occupation").change(function(){
-   					  var other_occupation = $(".other_occupation").val();
-   					  if(other_occupation == 'other_occupation'){
-   			   $('.user_reg10').show();
-   					  }else{
-   			   $('.user_reg10').hide();
-                          // $('.user_reg10').val(other_occupation);						   
-   					  }						   
-   					}); 
-   					
-   					$('.user_reg11').hide();
-   					$(".Occu_pation").change(function(){
-   					  var Occu_pation = $(".Occu_pation").val();
-   					  if(Occu_pation == 'Occu_pation'){
-   			   $('.user_reg11').show();
-   					  }else{
-   			   $('.user_reg11').hide();
-                           //$('.user_reg11').val(Occu_pation);						   
-   					  }						   
-   					});
-   					
-   			   
-   			});
-       $('.loginlink').click(function(){
-
-			    $('.image_class')[0].click();
-			  
-			 });  	
-   				
-</script>
-
-   <script type="text/javascript">
-     
-      $(document).ready(function(){
-      $("#editform").hide();
-      $(".basic_edit").click(function(){
-      $(".basicdetails_form").hide();
-      $("#editform").show();
-      
-      });
-        $(".loader_cls").hide();  
-      $("#basic_details").click(function(){
-            $('#basicdtls').validate({
-                rules: {
-              name: {required: true ,
-              },
-              body_type:{required: true ,},
-          complexion:{required: true ,},
-        height:{required: true ,},
-          physical_status:{required: true ,},
-        weight:{required: true ,},
-        marital_status:{required: true ,},
-        eating_habits:{required: true ,},
-       drinking_habit:{required: true ,},
-        smoking_habits:{required: true ,},
-             
-             
-                         },
-                                
-         highlight: function(element) {
-             $(element).addClass('red');
-         },
-         unhighlight: function(element) {
-             $(element).removeClass('red');
-         },
-         submitHandler: function(form) {  
-           $(".loader_cls").show();  
-     
-          $(".basicdetails_form").show();
-      $("#editform").hide();
-         
-      
-      var value =$("#basicdtls").serialize() ;
-          
-            
-                               $.ajax({
-                               type:'POST',
-                               url: "{{ url('user/update-basicdetails') }}",
-                               data: value,
-                               success:function (update_basicdetails){
-                                   $(".loader_cls").hide();
-                               console.log(update_basicdetails);
-      
-                                         if(update_basicdetails==1){
-                                                   window.location="{{ url('user/profileview') }}";
-                                                   //alert("Successfully Updated");
-                                                
-                                                   location.reload();													 
-                                                    													 
-                                                           }
-                                                   else{
-                                                   $(".msg").html('error');
-                                                       }
-                                                   } 
-                                      }); 
-                   } 
-                });   
-      		  });
-    
- 
-     ////////////////////////////////update religious info////////////////////////////////////////////////	 
-      
-      $("#location_hide").hide();
-      $(".Religious_Information").click(function(){
-      $(".religious_info_details").hide();
-      $("#location_hide").show();
-      
-      });
-       $(".loader_cls").hide(); 
-      $("#regg1").click(function(){
-
-        $('#loctnform').validate({
-                rules: {
-          religion: {required: true ,}, 
-                caste: {required: true ,},
-                star: {required: true ,},
-        rassi_moonsign: {required: true ,},
-        zodiac_starsign: {required: true ,},
-               
-         },
-                                
-         highlight: function(element) {
-             $(element).addClass('red');
-         },
-         unhighlight: function(element) {
-             $(element).removeClass('red');
-         },
-         submitHandler: function(form) {                
-
-
-           $(".loader_cls").show(); 
-      $(".religious_info_details").show();
-      $("#location_hide").hide();
-      
-            var value =$("#loctnform").serialize() ;
-                               
-      
-                               $.ajax({
-                               type:'POST',
-                                url: "{{ url('user/update-religiousinformation') }}",
-                               data: value,
-                               success:function (editreligious_info){
-                                     $(".loader_cls").hide(); 
-                               console.log(editreligious_info);
-       
-                                            if(editreligious_info==1){
-      
-                                                window.location="{{ url('user/profileview') }}";	
-                                               
-      		
-                                                           }
-                                                   else{
-                                                   $(".msg").html('error');
-                                                       }
-                                                   } 
-                                      }); 
-                             }
-                           });
-      		  });
-          
-           //////////////////////////////////update location//////////////////////////////////////////////
-     
-      $("#loctn_hide").hide();
-      $(".edit_location").click(function(){
-      $(".location_details").hide();
-      $("#loctn_hide").show();
-      
-      });
-      $(".loader_cls").hide();  
-      $("#loc_dtls").click(function(){
-
-          $('#lctndetails-form').validate({
-                rules: {
-           country_livingin: {required: true ,},  
-                state: {required: true ,},
-                 district: {required: true ,},
-         mother_tongue: {required: true ,},
-        
-         },
-                                
-         highlight: function(element) {
-             $(element).addClass('red');
-         },
-         unhighlight: function(element) {
-             $(element).removeClass('red');
-         },
-         submitHandler: function(form) {
-          $(".loader_cls").show();  
-      $(".location_details").show();
-      $("#loctn_hide").hide();
-      
-      var value =$("#lctndetails-form").serialize() ;
-                             
-      
-                               $.ajax({
-                               type:'POST',
-                               url: "{{ url('user/update-location') }}",
-                               data: value,
-                               success:function (location){
-                                   $(".loader_cls").hide();  
-                               console.log(location);
-       
-                                            if(location==1){
-      
-                                                window.location="{{ url('user/profileview') }}";
-                                              
-      		
-                                                           }
-                                                   else{
-                                                   $(".msg").html('error');
-                                                       }
-                                                   } 
-                                      }); 
-                             }
-                           });
-      		  });
-          //////////////////////////////////update professional information///////////////////////////////////////////////	 
-     
-      $("#prf_info_hide").hide();
-      $(".edit_professionalinfo").click(function(){
-      $(".details_professionalinformation").hide();
-      $("#prf_info_hide").show();
-      
-      });
-      $(".loader_cls").hide();  
-      $("#prf_inf_submit").click(function(){
-
-    $('#profesional_info_form').validate({
-                           rules: {
-                              education: {required: true ,},  
-                 college: {required: true ,},
-                 education_in_detail: {required: true ,},
-         occupation_in_detail: {required: true ,},
-         employedin: {required: true ,},
-         annual_income: {required: true ,},
-        
-         },
-                                
-         highlight: function(element) {
-             $(element).addClass('red');
-         },
-         unhighlight: function(element) {
-             $(element).removeClass('red');
-         },
-         submitHandler: function(form) {
-
-
-          $(".loader_cls").show();  
-      $(".details_professionalinformation").show();
-      $("#prf_info_hide").hide();
-      
-      var value =$("#profesional_info_form").serialize() ;
-                               
-      
-                               $.ajax({
-                               type:'POST',
-                               url: "{{ url('user/update-professionalinfo') }}",
-                               data: value,
-                               success:function (prf_info){
-                                   $(".loader_cls").hide();  
-                               console.log(prf_info);
    
-                                            if(prf_info==1){
-      
-                                                window.location="{{ url('user/profileview') }}";
-                                                
-      		
-                                                           }
-                                                   else{
-                                                   $(".msg").html('error');
-                                                       }
-                                                   } 
-                                      }); 
-                             }
-                           });
-      		  });
-           //////////////////////////////////update family details///////////////////////////////////////////////	 
-          
-      $("#family_dtls_hide").hide();
-      $(".edit_familydetails").click(function(){
-      $(".details_familydetails").hide();
-      $("#family_dtls_hide").show();
-      
-      });
-      $(".loader_cls").hide();  
-      $("#regg4").click(function(){
-         $('#family_details_form').validate({
-                           rules: {
-          
-                fathers_status: {required: true ,}, 
-                 mothers_status: {required: true ,},
-                 family_values: {required: true ,},
-         family_type: {required: true ,},
-         familystatus: {required: true ,},
-         brothers_married:{required:true,},
-                no_of_sisters:{required:true,},
-                sisters_married:{required:true,},
-         },
-                                
-         highlight: function(element) {
-             $(element).addClass('red');
-         },
-         unhighlight: function(element) {
-             $(element).removeClass('red');
-         },
-         submitHandler: function(form) {
-          $(".loader_cls").show();  
-      $(".details_familydetails").show();
-      $("#family_dtls_hide").hide();
-      
-      var value =$("#family_details_form").serialize() ;
-                               
-                               $.ajax({
-                               type:'POST',
-                               url: "{{ url('user/update-familydetails') }}",
-                               data: value,
-                               success:function (family_dtls){
-                                   $(".loader_cls").hide();  
-                               console.log(family_dtls);
-       
-                                           if(family_dtls==1){
-      
-                                    
-      				  window.location="{{ url('user/profileview') }}";	
-      				 
-                                                           }
-                                                   else{
-                                                   $(".msg").html('error');
-                                                       }
-                                                   } 
-                                      }); 
-                             }
-                           });
-      		  });
-            //////////////////////////////////update about my family///////////////////////////////////////////////	 
-          
-          
-      $("#abt_myfamily_hide").hide();
-      $(".edit_aboutfamily").click(function(){
-      $(".details_aboutmyfamily").hide();
-      $("#abt_myfamily_hide").show();
-      
-      });
-      $(".loader_cls").hide();  
-      $("#abtmyfamily_form").click(function(){
-
-         $('#aboutmyfamily-form').validate({
-                           rules: {
-           about_my_family: 
-           {
-            required: true ,
-             minlength: 100,
-            maxlength:300
-           }, 
-         },
-                                
-         highlight: function(element) {
-             $(element).addClass('red');
-         },
-         unhighlight: function(element) {
-             $(element).removeClass('red');
-         },
-         submitHandler: function(form) {
-          $(".loader_cls").show();  
-      $(".details_aboutmyfamily").show();
-      $("#abt_myfamily_hide").hide();
-      
-      var value =$("#aboutmyfamily-form").serialize() ;
-                               
-                               $.ajax({
-                               type:'POST',
-                               url: "{{ url('user/update-aboutmyfamily') }}",
-                               data: value,
-                               success:function (abt_myfamily){
-                                   $(".loader_cls").hide();  
-                               console.log(abt_myfamily);
-       
-                                           if(abt_myfamily==1){
-      
-                                              window.location="{{ url('user/profileview') }}";
-                                             
-      			
-                                                           }
-                                                else{
-                                                $(".msg").html('error');
-                                                }
-                                              } 
-                                       }); 
-                             }
-                           });
-      		 });
-      
-      
-          
-      
-      });
-  				
-       $.ajaxSetup({
-  headers: { 'X-CSRF-Token' : $('meta[name=_token]').attr('content') }
-});
- 
-     
-   </script>
-   
- <script>
-    var selected_caste = '';
-      $('.loader').hide();
-    var value=$("#religion_id").val();
-      
-      selected_caste = $(".user_caste").val();
-      
-           $.ajax({
-             type: "GET",
-             url: "{{ url('user/update-religioncaste') }}",
-             data:{rel_val:value,caste:selected_caste},
-             success:function (return_rel){
-                  $('.loader').hide();
-             console.log(return_rel);
-                if(return_rel!=0){
-                                  
-                       
-                $(".user_caste").html(return_rel);
-					
-					$('.test_class').select2();
-                                  }
-                              else
-                                {
-               $(".msg").html('error');
-      											 
-                                                            }
-                                                        }
-           
-            }); 
-     $("#religion_id").on('change', function() {
-           
-       $('.loader').show();
-      var value=$(this).val();
-      
-      
-           $.ajax({
-             type: "GET",
-             url: "{{ url('user/update-religioncast') }}",
-             data:{rel_val:value},
-             success:function (return_rel){
-                  $('.loader').hide();
-             console.log(return_rel);
-                                                    if(return_rel!=0){
-                                                       
-                                                  $(".user_caste").html(return_rel);
-                                                        }
-                                                        else{
-                                                          $(".msg").html('error');
-      											 	
-                                                            }
-                                                        }
-           
-            });  
-      });
-     //////////////////////////////////display state and district/////////////////////////////////////////
-     $('.loader_state').hide(); 
-     var value=$("#country_id").val();
-      
-      var selected_state = $(".user_state").val();
-      
-        
-           $.ajax({
-             type: "GET",
-             url: "{{ url('user/update-country') }}",
-             data:{state_val:value},
-             success:function (return_sta){
-            $('.loader_state').hide(); 
-             console.log(return_sta);
-                
-                 if(return_sta!=0){
-                                                     
-                     $(".user_state").html(return_sta);
-		             $('.user_state').val(selected_state);
-					 
-                                                        }
-                                                        else{
-                                                  $(".msg").html('error');
-      											  
-                                                            }
-                                                        }
-
-            });		
-				
-      $("#country_id").on('change', function() {
-     
-          $('.loader_state').show(); 
-          
-       var value=$(this).val();
-      
-           $.ajax({
-             type: "GET",
-             url: "{{ url('user/update-country') }}",
-             data:{state_val:value},
-             success:function (return_sta){
-                 $('.loader_state').hide(); 
-             console.log(return_sta);
-                
-                 if(return_sta!=0){
-                                              
-                     $(".user_state").html(return_sta);
-                                                        }
-                                                        else{
-                                                $(".msg").html('error');
-      											
-                                                            }
-                                                        }
-           
-            });  
-      });
-     
-       //////////////////////////////////display star moonsign/////////////////////////////////////////
-     
-      $('.loader_district').hide();
-     var value=$("#star_id").val();
-        var selected_rassi = $(".user_rassi").val();
-       
-           $.ajax({
-             type: "GET",
-             url: "{{ url('user/update-moonsign') }}",
-             data:{moonsign_val:value},
-             success:function (return_starmoon){
-                  $('.loader_district').hide();
-             console.log(return_starmoon);
-            
-                 if(return_starmoon!=0){
-                                                   
-                     $(".user_rassi").html(return_starmoon);
-					 $('.user_rassi').val(selected_rassi);
-					 
-                                                        }
-                                                        else{
-                                                            $(".msg").html('error');
-      											 	
-                                                            }
-                                                        }
-           
-            });  
-       $("#star_id").on('change', function() {
-       $('.loader_district').show();
-       var value=$(this).val();
-      
-        
-           $.ajax({
-             type: "GET",
-             url: "{{ url('user/update-moonsign') }}",
-             data:{moonsign_val:value},
-             success:function (return_starmoon){
-                  $('.loader_district').hide();
-             console.log(return_starmoon);
-                                                    
-                 if(return_starmoon!=0){
-                                                
-                     $(".user_rassi").html(return_starmoon);
-                                                        }
-                                                        else{
-                                                            $(".msg").html('error');
-      											 	
-                                                            }
-                                                        }
-           
-            });  
-      });
-      //////////////////////////////////display district/////////////////////////////////////////
-      $('.loader_district').hide(); 
-     var value=$("#state_id").val();
-         var selected_district = $(".user_district").val();
-       
-           $.ajax({
-             type: "GET",
-             url: "{{ url('user/update-district') }}",
-             data:{district_val:value},
-             success:function (return_district){
-                  $('.loader_district').hide();
-             console.log(return_district);
-                                                     if(return_district!=0){
-                                                     
-                                    $(".user_district").html(return_district);
-									$('.user_district').val(selected_district);
-		               
-                                                        }
-                                                        else{
-                                                        	
-                                                            }
-                                                        }
-           
-            });  
-            
-      $("#state_id").on('change', function() {
-        $('.loader_district').show();
-       var value=$(this).val();
-      
-      
-           $.ajax({
-             type: "GET",
-             url: "{{ url('user/update-district') }}",
-             data:{district_val:value},
-             success:function (return_district){
-                  $('.loader_district').hide();
-             console.log(return_district);
-                                                     if(return_district!=0){
-                                                 
-                                                     $(".user_district").html(return_district);
-                                                        }
-                                                        else{
-                                                         $(".msg").html('error');
-      											  	
-                                                            }
-                                                        }
-           
-            });  
-      });
-      
-      $('.loader_occupation').hide();
-    var value=$("#educationfield_id").val();
-      var selected_caste = $(".user_occupation").val();
-     
-           $.ajax({
-             type: "GET",
-             url: "{{ url('user/update-education') }}",
-             data:{education_val:value},
-             success:function (return_education){
-                  $('.loader_occupation').hide();
-             console.log(return_education);
-                                                    if(return_education!=0){
-                                                    
-                                                  $(".user_occupation").html(return_education);
-      						                      $('.user_occupation').val(selected_caste);
-      						  
-                                                        }
-                                                        else{
-                                                         $(".msg").html('error');
-      											 
-                                                            }
-                                                        }
-           
-            });  
-      
-       $("#educationfield_id").on('change', function() {
-          $('.loader_occupation').show();
-      var value=$(this).val();
-      
-  
-           $.ajax({
-             type: "GET",
-             url: "{{ url('user/update-education') }}",
-             data:{education_val:value},
-              success:function (return_education){
-                   $('.loader_occupation').hide();
-              console.log(return_education);
-                                                    if(return_education!=0){
-                                                      
-                                                  $(".user_occupation").html(return_education);
-                                                        }
-                                                        else{
-                                           $(".msg").html('error');
-      											   
-                                                            }
-                                                        }
-           
-            });  
-      });  
-      
-</script>
-
-<!-- user visibility -->
-
-<script type="text/javascript">
-
-function common_value(){
-
-  /* basicdtls*/
-
-   var name=$("#visibility_name").val();
-  var body_type=$('#visibility_body_type').val();
-  var complexion=$("#visibility_complexion").val(); 
-  var height=$("#visibility_height").val();
-  var physical_status=$("#visibility_physical_status").val();
-  var weight=$("#visibility_weight").val();
-  var marital_status=$("#visibility_marital_status").val();
-   var eating_habits=$("#visibility_eating_habits").val();
-  var drinking_habits=$('#visibility_drinking_habits').val();
-  var smoking_habits=$("#visibility_smoking_habits").val(); 
-
-     /* religious_info*/
-
-  var religion=$("#visibility_religion").val();
-  var caste=$("#visibility_caste").val();
-  var star=$("#visibility_star").val();
-  var rasi=$("#visibility_rasi").val();
-   var zodiac=$("#visibility_zodiac").val();
-  /* location*/
-
-  var country=$("#visibility_country").val();
-  var state=$("#visibility_state").val();
-  var mother_tongue=$("#visibility_mother_tongue").val();
-  var district=$("#visibility_district").val();
-
-  /* professional_info*/
-
-   var education=$("#visibility_education").val();
-  var occupation=$('#visibility_occupation').val();
-  var college=$("#visibility_college").val(); 
-  var education_in_detail=$("#visibility_education_in_detail").val();
-  var occupation_in_detail=$("#visibility_occupation_in_detail").val();
-  var employed_in=$("#visibility_employed_in").val();
-  var annual_income=$("#visibility_annual_income").val();
-
-   /* family_dtls*/
-
-   var fathers_status=$("#visibility_fathers_status").val();
-  var mother_status=$('#visibility_mother_status').val();
-  var family_values=$("#visibility_family_values").val(); 
-  var family_type=$("#visibility_family_type").val();
-  var family_status=$("#visibility_family_status").val();
-  var no_of_brothers=$("#visibility_no_of_brothers").val();
-  var no_of_sisters=$("#visibility_no_of_sisters").val();
-  var brothers_married=$("#visibility_brothers_married").val();
-  var sisters_married=$("#visibility_sisters_married").val();
-
-   /* about_my_family*/
-
-   var about_my_family=$("#visibility_about_my_family").val();
-
-  $.ajax({
-    type:'POST',
-    url:"{{ url('user/user-visibility-permission') }}", 
-    data: {name:name,body_type:body_type,complexion:complexion,height:height,physical_status:physical_status,weight:weight,
-marital_status:marital_status,eating_habits:eating_habits,drinking_habits:drinking_habits,smoking_habits:smoking_habits,
-religion:religion,caste:caste,star:star,rasi:rasi,zodiac:zodiac,country:country,state:state,mother_tongue:mother_tongue,
-district:district,education:education,occupation:occupation,college:college,education_in_detail:education_in_detail,
-occupation_in_detail:occupation_in_detail,employed_in:employed_in,annual_income:annual_income,
-fathers_status:fathers_status,mother_status:mother_status,family_values:family_values,family_type:family_type,
-family_status:family_status,no_of_brothers:no_of_brothers,no_of_sisters:no_of_sisters,brothers_married:brothers_married,
-sisters_married:sisters_married,about_my_family:about_my_family
-}, 
-    success:function (insert_visibility){ 
-      console.log(insert_visibility);
-                                                   
-             if(insert_visibility==1){
-                             $(".msg").html('success');
-                              //  window.location="{{ url('user/profileview') }}";                                                                                        $(".user_occupation").html(return_education);
-                                  }
-                              else{
-                        $(".msg").html('error');
-                               
-                                   }
-    
-    }
-                            
-});
-
-}
-
-</script>
- <!-- user visibility -->
-  <script type="text/javascript">
-    $(document).ready(function (){
-            $("#NoS").change(function() {
-          
-                // SiM is the id of the other select box 
-               
-                if ($(this).val() != "None") {
-                    $(".sis_m").show();
-            
-                    //$('.sis_m_class').select2();
-                }else{
-                    $(".sis_m").hide();
-                    $("#visibility_sisters_married").hide();
-                    $(".sis").hide();
-                } 
-            });
-        });
+@include('scripts.script_dpp')
 
 
-</script>
- <script type="text/javascript">
-    $(document).ready(function (){
-
-            $("#NfBs1").change(function() {
-              //alert("hai");
-                // SiM is the id of the other select box 
-               var a=$(this).val();
-               //alert(a);
-                if ($(this).val() != "None") {
-                    $("#BrsM").show();
-            
-                    //$('.sis_m_class').select2();
-                }else{
-                    $("#BrsM").hide();
-                    $("#visibility_brothers_married").hide();
-                    $(".bro").hide();
-                } 
-            });
-        });
-
-
-</script>
-<script>
-      $(document).ready(function(){
-      var content = $('.edit_usernameform1').html();
-        $('[data-toggle="popover1"]').popover({content:content, html:true});  
-      
-        $(".update_username1").click(function(){
-                                       
-            $("#user_social").click(function(){
-          var value =$("#register_username1").serialize();
-             //alert(value);
-             
-          $.ajax({
-          type:'get',
-           url: "{{ url('user/update-socialmedia') }}",
-          data: value,
-           success:function (v){ 
-      console.log(v);
-                                                   
-             if(v==1){
-                             $(".msg").html('success');
-                              window.location="{{ url('user/profileview') }}";                                                                                        $(".user_occupation").html(return_education);
-                                  }
-                              else{
-                        $(".msg").html('error');
-                               
-                                   }
-         }
-                                             }); 
-                                           });});
-      
-      });
-        
-   </script>
 </body>
 </html>
 
