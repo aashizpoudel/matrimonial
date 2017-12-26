@@ -4821,14 +4821,11 @@ public function anyChatAutocomplete()
             
     //         ->take(5)
     //         ->get();
-        $query = User_Reg::with(['matchuser'=>function($query){
-            $query->where('profile_strength','>',59);
-        }])->where('gender','=','male')
-                            ->paginate(5);
+        $data = User_Reg::with(['matchuser'=>function($query){$query->where('profile_strength','>',59);}])->where('gender','=','male')->where(['email_key'=>null,'deactivate_status'=>'0'])->paginate(5);
         // return $curr->user_profile();
         // return view('custom.profile',compact('curr'));
         // return $query;
-          dd( $query);
+          return view('search',compact('data'));
     }
 
 //function to get details of given user id

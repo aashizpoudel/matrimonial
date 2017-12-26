@@ -20,9 +20,10 @@
       <meta name="description" content="">
       <meta name="author" content="">
       <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
-      <title>Soulmate</title>
+      <title>Matrimony</title>
       <!-- Bootstrap core CSS -->
-      <link href="{{asset('assets/css/bootstrap.css')}}" rel="stylesheet">
+      
+      <link href="https://cdnjs.cloudflare.com/ajax/libs/bootflat/2.0.4/css/bootflat.min.css" rel="stylesheet">
       <link href="{{asset('assets/css/style.css')}}" rel="stylesheet">
       <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
       <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->

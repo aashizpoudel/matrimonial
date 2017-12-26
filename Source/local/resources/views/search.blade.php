@@ -1,7 +1,7 @@
 
 <?php
 $sess_id= \Session::get('id');
-    $data1 = $results['login'];
+    // $data1 = $results['login'];
        // var_dump($data1);exit;
     $sess = \Session::get('username');
     $user_prf=\ DB::table('user_profile')->get();
@@ -112,58 +112,14 @@ $sess_id= \Session::get('id');
   </div>
   
   <!-- Header -->
-  <header class="header coporate-header">
+  <header class="header">
     <div class="sticky">
       <div class="container">
         <div class="logo"> <a href="index.html"><img src="images/logo.png" alt=""></a> </div>
         
         <!-- Nav -->
-        <nav>
-          <ul id="ownmenu" class="ownmenu">
-            <li><a href="index.html">HOME</a>
-              <ul class="dropdown">
-                <li><a href="index.html">HOME</a> </li>
-                <li><a href="index-1.html">HOME 2</a> </li>
-              </ul>
-            </li>
-            <li><a href="about-us.html">About</a> </li>
-            <li><a href="services.html">services</a> </li>
-            <li><a href="index.html">PAGES</a>
-              <ul class="dropdown">
-                <li><a href="index.html">HOME</a> </li>
-                <li><a href="index-1.html">HOME 2</a> </li>
-                <li><a href="about-us.html">About</a> </li>
-                <li><a href="about-us-2.html">About 2</a> </li>
-                <li><a href="services.html">services</a> </li>
-                <li><a href="services-2.html">services 2</a> </li>
-                <li><a href="portfolio.html">portfolio</a> </li>
-                <li><a href="portfolio-single.html">portfolio single </a> </li>
-                <li><a href="product-1.html">Shop 1</a></li>
-                <li><a href="product-2.html">Shop 2</a></li>
-                <li><a href="product-single.html">Shop Detail</a></li>
-                <li><a href="portfolio.html">portfolio</a></li>
-                <li><a href="cart-page.html">Checkout</a></li>
-                <li><a href="checkout.html">Your Cart</a></li>
-                <li><a href="blog.html">blog</a></li>
-                <li><a href="error-page.html">404</a></li>
-                <li><a href="contact.html">contact</a></li>
-              </ul>
-            </li>
-            <liclass="active"><a href="index-1.html">Shop</a>
-              <ul class="dropdown">
-                <li><a href="product-1.html">Shop Full Width</a></li>
-                <li><a href="product-2.html">Shop Sidebar Left</a></li>
-                <li><a href="portfolio-single.html">Shop Detail</a></li>
-                <li><a href="cart-page.html">Checkout</a></li>
-                <li><a href="checkout.html">Your Cart</a></li>
-              </ul>
-            </li>
-            <li><a href="portfolio.html">PORTFOLIO</a></li>
-            <li><a href="blog.html">Blog</a> </li>
-            <li><a href="contact.html">CONTACT</a></li>
-          </ul>
-        </nav>
-        <a href="#." class="waves-effect waves-ripple any-help z-depth-1">any help?</a>
+     
+        
       </div>
     </div>
   </header>
@@ -173,7 +129,7 @@ $sess_id= \Session::get('id');
   <section class="sub-banner bg-parallax" style="background:url(images/bg/about-bg-1.jpg) no-repeat">
     <div class="container">
       <div class="position-center-center">
-        <h1>product list</h1>
+        <h1>Random Matches</h1>
       </div>
     </div>
   </section>
@@ -227,59 +183,20 @@ $sess_id= \Session::get('id');
             <h4 class="shop-tittle">product lists</h4>
             <div class="products">
               <ul class="row">
-                <li class="col-md-4">
-                  <article> <img class="img-responsive" src="images/shop/img-1.jpg" alt="" >
-                    <div class="stars"> <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i> </div>
-                    <a href="#.">women model</a> <span class="price">$120.00</span><span class="line">$179.00</span> </article>
+                @foreach($data as $da)
+                <li class="col-md-4"><a href="#">
+                  {{ $da->name }}
+                  <article> <img class="img-responsive" src="{!! asset($da->matchuser->path) !!}" alt="" >
+                  <div><span>{{ $da->matchuser->name }}</span></div>
+                  <div><span>{{ $da->dob }}</span></div>
+                  
+                  </article>
+                    </a>
                 </li>
-                <li class="col-md-4">
-                  <article> <img class="img-responsive" src="images/shop/img-2.jpg" alt="" >
-                    <div class="stars"> <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i> </div>
-                    <a href="#.">women model</a> <span class="price">$120.00</span><span class="line">$179.00</span> </article>
-                </li>
-                <li class="col-md-4">
-                  <article> <img class="img-responsive" src="images/shop/img-3.jpg" alt="" >
-                    <div class="stars"> <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i> </div>
-                    <a href="#.">women model</a> <span class="price">$120.00</span><span class="line">$179.00</span> </article>
-                </li>
-                <li class="col-md-4">
-                  <article> <img class="img-responsive" src="images/shop/img-4.jpg" alt="" >
-                    <div class="stars"> <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i> </div>
-                    <a href="#.">women model</a> <span class="price">$120.00</span><span class="line">$179.00</span> </article>
-                </li>
-                <li class="col-md-4">
-                  <article> <img class="img-responsive" src="images/shop/img-5.jpg" alt="" >
-                    <div class="stars"> <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i> </div>
-                    <a href="#.">women model</a> <span class="price">$120.00</span><span class="line">$179.00</span> </article>
-                </li>
-                <li class="col-md-4">
-                  <article> <img class="img-responsive" src="images/shop/img-6.jpg" alt="" >
-                    <div class="stars"> <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i> </div>
-                    <a href="#.">women model</a> <span class="price">$120.00</span><span class="line">$179.00</span> </article>
-                </li>
-                <li class="col-md-4">
-                  <article> <img class="img-responsive" src="images/shop/img-7.jpg" alt="" >
-                    <div class="stars"> <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i> </div>
-                    <a href="#.">women model</a> <span class="price">$120.00</span><span class="line">$179.00</span> </article>
-                </li>
-                <li class="col-md-4">
-                  <article> <img class="img-responsive" src="images/shop/img-8.jpg" alt="" >
-                    <div class="stars"> <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i> </div>
-                    <a href="#.">women model</a> <span class="price">$120.00</span><span class="line">$179.00</span> </article>
-                </li>
-                <li class="col-md-4">
-                  <article> <img class="img-responsive" src="images/shop/img-9.jpg" alt="" >
-                    <div class="stars"> <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i> </div>
-                    <a href="#.">women model</a> <span class="price">$120.00</span><span class="line">$179.00</span> </article>
-                </li>
+                @endforeach
+                
               </ul>
-              <ul class="pagination">
-                <li><a href="#.">1</a></li>
-                <li><a href="#.">2</a></li>
-                <li><a href="#.">3</a></li>
-                <li><a href="#.">4</a></li>
-                <li><a href="#.">5</a></li>
-              </ul>
+              {!!$data->render()!!}
             </div>
           </div>
         </div>
