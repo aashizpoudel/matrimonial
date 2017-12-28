@@ -9,6 +9,7 @@
   $get_country=\ DB::table('country')->get();
   $get_mothr_tounge=\ DB::table('mother_tongue')->get();
   $get_education=\ DB::table('education')->get();
+  $get_annual_income=\ App\AnnualIncome::get();
    ?>
 
 @include('include.profile_header')
@@ -937,7 +938,8 @@
 												<li>
 													<ul class="child-list">
 														<li class="first">Annuval Income</li>
-														<li class="second">:&nbsp;&nbsp;&nbsp;<?php echo $user->annual_income; ?></li>
+														<li class="second">:&nbsp;&nbsp;&nbsp;>To be filled</li>
+															
 													</ul>
 												</li>
 											</ul>
@@ -1056,11 +1058,14 @@
 										<div class="row pdng25">
 										<div class="col-md-4">
 												Annual Income(/Monthly):<br>
-												<select class="eselect dda" type="text" name="annual_income" id="auli" placeholder="Annual Income">
-												  <option  <?php if($user->annual_income=='below 100000'){echo "selected='selected'";}?>>Below 1,00,000/-</option>                                        
-                                        <option    <?php if($user->annual_income=='100000-200000'){echo "selected='selected'";}?>>1,00,000-2,00,000/-</option>
-                                            <option <?php if($user->annual_income=='above 200000'){echo "selected='selected'";}?>>2,00,000 above</option>   			
-                                          </select>
+												<select class="edrom dda" name='annual_income'>
+												@foreach ($get_annual_income as $income)
+													{{-- expr --}}
+													<option value='{{ $income->id }}'>From ${{ $income->from }} to ${{ $income->to }}</option>
+												@endforeach
+												</select>
+												  			
+                                          
 											</div>
 
 											<div class="col-md-2">
@@ -1097,13 +1102,13 @@
 												<li>
 													<ul class="child-list">
 														<li class="first">Family Value</li>
-														<li class="second">:&nbsp;&nbsp;&nbsp;<?php echo $user->family_values; ?></li>
+														<li class="second">:&nbsp;&nbsp;&nbsp; {{ $user->family_values }}</li>
 													</ul>
 												</li>
 												<li>
 													<ul class="child-list">
 														<li class="first">Family Type</li>
-														<li class="second">:&nbsp;&nbsp;&nbsp;<?php echo $user->family_type; ?></li>
+														<li class="second">:&nbsp;&nbsp;&nbsp; {{ $user->family_type }}</li>
 													</ul>
 												</li>
 												<li>

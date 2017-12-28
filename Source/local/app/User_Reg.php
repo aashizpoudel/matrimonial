@@ -10,8 +10,8 @@ class User_Reg extends Model
     protected $table = 'user_reg';
 
 
-  public function matchuser(){
-     	return $this->hasOne("App\Match_User",'user_id');
+  public function userprofile(){
+     	return $this->hasOne("App\User_Profile",'user_id');
      }
 
 

@@ -10,6 +10,7 @@
   $getzodiac_sign=\ DB::table('zodiac_starsign')->get();
   $get_country=\ DB::table('country')->get();
   $get_mother_tounge=\ DB::table('mother_tongue')->get();
+  $get_marital_status=\ DB::table('marital_status')->get();
   $get_education=\ DB::table('education')->get();
   $get_occupation=\ DB::table('occupation')->get();
 
@@ -34,6 +35,9 @@
    $d_caste = explode(",", $d_caste);
   $d_mother_tongue = $desired_profile->mother_tongue;
     $d_mother_tongue = explode(",", $d_mother_tongue);
+
+    $d_marital_status = $desired_profile->marital_status;
+    $d_marital_status = explode(",", $d_marital_status);
 
   $d_education = $desired_profile->education;
     $d_education = explode(",", $d_education);
@@ -63,6 +67,28 @@ function show_multiple_data($get_table_name,$d_name,$select_row_id,$select_eleme
 	}
 
 
+function input_multiple_data($get_table_name,$d_name,$select_row_id,$select_element){
+
+	foreach($get_table_name as $table_name){
+		$s = '';
+       
+		for($i = 0; $i<sizeof($d_name); $i++){
+  			if($table_name->$select_row_id == $d_name[$i] ){ 
+  				$s_id =  $table_name->$select_row_id;
+     		 $s = "selected";
+     		 echo "<option $s value=''>$table_name->select_element</option>";
+     		}
+     		else {
+     			echo "<option value='$table_name->$select_row_id'>$table_name->select_element</option>";
+     		
+     		}
+  			}
+
+	}
+
+}
+
+ 
 ?>
 
 @include('include.profile_header')
@@ -311,14 +337,14 @@ function show_multiple_data($get_table_name,$d_name,$select_row_id,$select_eleme
 												<li>
 													<ul class="child-list">
 														<li class="first">Martial Status</li>
-														<li class="second">:&nbsp;&nbsp;&nbsp;<?php echo $user->marital_status; ?></li>
+														<li class="second">:&nbsp;&nbsp;&nbsp;<?php show_multiple_data($get_marital_status,$d_marital_status,"marital_status_id","marital_status"); ?></li>
 													</ul>
 												</li>
 	
 												<li>
 													<ul class="child-list">
 														<li class="first">Country</li>
-														<li class="second">:&nbsp;&nbsp;&nbsp;<?php echo $user->country; ?></li>
+														<li class="second">:&nbsp;&nbsp;&nbsp;<?php show_multiple_data($get_country,$d_country,"country_id","country"); ?></li>
 													</ul>
 												</li>
 												
@@ -348,54 +374,35 @@ function show_multiple_data($get_table_name,$d_name,$select_row_id,$select_eleme
 											<div class="col-md-4">
 												Age :<br>
 												<Select class="eselect dda" name="age_from" id="age1">
-													<option value="">Height</option>
-
-
-
-												<?php 
-
-													for ($ft=4; $ft < 7; $ft++) { 
-														for($in=1; $in<12;$in++){
-															if($ft==4 && $in<5 ){
-																continue;
-															}
-
-														
-
-															$i =  floor(($ft*12+$in)*2.54);
-															$j =$ft."ft ".$in."in - ".$i."cm"; 
-																?>
 													
-                                             <option <?php if($user->height==$i){echo "selected='selected'";} ?>	value='<?php echo $i; ?>'> <?php echo $j; ?></option>
-                                             <?php 
-                                               } }
-                                               ?>		
+												
+												<?php
+													for($i=18;$i<70;$i++){
+
+														?>
+													
+                                             <option <?php if($d_age_from==$i){echo "selected='selected'";} ?>	value='<?php echo $i; ?>'> <?php echo $i; ?></option>
+                                            		<?php
+                                            			
+                                            			}	
+
+													?>
+                                            		
 												</Select>
 											</div>
 											<div class="col-md-4"><br>
 												<Select class="eselect dda" name="age_to" id="age2">
-													<option value="">Height</option>
+													<?php
+													for($i=18;$i<70;$i++){
 
-
-
-												<?php 
-
-													for ($ft=4; $ft < 7; $ft++) { 
-														for($in=1; $in<12;$in++){
-															if($ft==4 && $in<5 ){
-																continue;
-															}
-
-														
-
-															$i =  floor(($ft*12+$in)*2.54);
-															$j =$ft."ft ".$in."in - ".$i."cm"; 
-																?>
+														?>
 													
-                                             <option <?php if($user->height==$i){echo "selected='selected'";} ?>	value='<?php echo $i; ?>'> <?php echo $j; ?></option>
-                                             <?php 
-                                               } }
-                                               ?>		
+                                             <option <?php if($d_age_to==$i){echo "selected='selected'";} ?>	value='<?php echo $i; ?>'> <?php echo $i; ?></option>
+                                            		<?php
+                                            			
+                                            			}	
+
+													?>		
 												</Select>
 											</div>
 
@@ -408,25 +415,18 @@ function show_multiple_data($get_table_name,$d_name,$select_row_id,$select_eleme
 											<div class="col-md-4">
 												Height :<br>
 												<Select class="eselect dda" name="height_from" id="height">
-													<option value="">Height</option>
+													
 
 
 
 												<?php 
-
 													for ($ft=4; $ft < 7; $ft++) { 
 														for($in=1; $in<12;$in++){
-															if($ft==4 && $in<5 ){
-																continue;
-															}
-
-														
-
+															if($ft==4 && $in<5 ){continue;}
 															$i =  floor(($ft*12+$in)*2.54);
 															$j =$ft."ft ".$in."in - ".$i."cm"; 
-																?>
-													
-                                             <option <?php if($user->height==$i){echo "selected='selected'";} ?>	value='<?php echo $i; ?>'> <?php echo $j; ?></option>
+												?>
+                                             <option <?php if($d_height_from==$i){echo "selected='selected'";} ?>	value='<?php echo $i; ?>'> <?php echo $j; ?></option>
                                              <?php 
                                                } }
                                                ?>		
@@ -436,23 +436,16 @@ function show_multiple_data($get_table_name,$d_name,$select_row_id,$select_eleme
 												<select class="eselect dda" name="height_to" id="height1">
 													<option value="">Height</option>
 
-
-
 												<?php 
-
 													for ($ft=4; $ft < 7; $ft++) { 
 														for($in=1; $in<12;$in++){
-															if($ft==4 && $in<5 ){
-																continue;
-															}
-
-														
-
+															if($ft==4 && $in<5 ){continue;}
 															$i =  floor(($ft*12+$in)*2.54);
 															$j =$ft."ft ".$in."in - ".$i."cm"; 
-																?>
-													
-                                             <option <?php if($user->height==$i){echo "selected='selected'";} ?>	value='<?php echo $i; ?>'> <?php echo $j; ?></option>
+												?>
+
+
+                                             <option <?php if($d_height_to==$i){echo "selected='selected'";} ?>	value='<?php echo $i; ?>'> <?php echo $j; ?></option>
                                              <?php 
                                                } }
                                                ?>		
@@ -465,20 +458,7 @@ function show_multiple_data($get_table_name,$d_name,$select_row_id,$select_eleme
 											<div class="col-md-6">
 												Country :<br>
 												<select class="multiple_country eselect dda" type="text" name="country_livingin[]" id="country_id" multiple="multiple" style="width: 92%;"  >
-												  <?php
-                                                     foreach($get_country as $getcountry)
-                                                     {
-													 $select = '';
-													  if($getcountry->country_id == $user->country_id)
-													    {
-												      $select = "selected";
-													    }
-													 ?>
-													 
-                                             <option <?php echo $select; ?> value="<?php echo $getcountry->country_id; ?>"> <?php echo $getcountry->country; ?></option>
-													 <?php 
-													  }
-													  ?>
+												 <?php input_multiple_data($get_country,$d_country,"country_id","country"); ?>	
                                              </select>
 											</div>
 										</div>
@@ -488,10 +468,22 @@ function show_multiple_data($get_table_name,$d_name,$select_row_id,$select_eleme
 											<div class="col-md-6">
 												Maritial Status :<br>
 												<select class="multiple_marital_status eselect dda" type="text" name="marital_status[]" id="marital_status" multiple="multiple" style="width: 92%;" >
-												 <option <?php if($user->marital_status=='Never Married'){echo "selected='selected'";}?>>Never Married</option>
-                                                <option	<?php if($user->marital_status=='Widower'){echo "selected='selected'";}?>>Widower</option>
-                                                <option	<?php if($user->marital_status=='Divorced'){echo "selected='selected'";}?>>Divorced</option>
-                                                <option	<?php if($user->marital_status=='Awaiting divorc'){echo "selected='selected'";}?>>Awaiting divorce</option>
+												 <?php
+                                            
+                                                foreach($get_marital_status as $getmar)
+                                                  {
+                                                 $s = '';
+                                                 $i = 0;
+					                              if($getmar->marital_status_id == $d_marital_status[$i])
+					                                 {
+						                           $s = "selected";
+						                             }
+						                              $i++; 
+                                                  ?>
+                                             <option <?php echo $s; ?> value="<?php echo $getmar->marital_status_id; ?>"><?php echo $getmar->marital_status; ?></option>
+                                               <?php
+                                                  }
+                                                ?>	
                                              </select>
 											</div>
 
@@ -580,10 +572,11 @@ function show_multiple_data($get_table_name,$d_name,$select_row_id,$select_eleme
                                                  $s = '';
                                                  $i = 0;
 					                              if($getrel->religion_id == $d_religion[$i])
-					                              $i++; 
+					                             
 					                                 {
 						                           $s = "selected";
 						                             }
+						                              $i++; 
                                                   ?>
                                              <option <?php echo $s; ?> value="<?php echo $getrel->religion_id; ?>"><?php echo $getrel->religion; ?></option>
                                                <?php

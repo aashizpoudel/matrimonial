@@ -4,8 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class reg_user extends Model
+class AnnualIncome extends Model
 {
+
+	
+	protected $fillable = ['from','to'];
     //
-    protected $table = "reg_user";
+
 }

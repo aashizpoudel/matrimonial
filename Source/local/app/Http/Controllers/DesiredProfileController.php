@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\DesiredProfile;
 use App\Http\Requests;
+use App\User_Profile;
+use App\User_Reg;
+
 use App\Http\Controllers\Controller;
 use App\models\notification;
 use App\models\dailyrecommendation;
@@ -112,16 +115,57 @@ class DesiredProfileController extends Controller
         $gender=\Session::get('gender');
         $matches=\DB::table('user_profile')
                ->where('user_id',$id)->get();
+        if($gender=='male'){
+          $search_gender= 'female';
+        }else{
+          $search_gender='male';
+        }
+        $current =  User_Profile::findOrFail($id); //get current user 
 
-    //var_dump($matches);
+        if($current->desiredprofile == null){
+          DesiredProfile::create(['user_id'=>$id])->save();
+          return redirect('user/desired-profiles');
+        }
+        $desired  = $current->desiredprofile ;
+        
+        $dobFrom = (new Carbon())->subYears($desired->age_to)->toDateString() ;
+        $dobTo = (new Carbon())->subYears($desired->age_from)->toDateString() ;
+        echo $dobFrom ;
+        echo $dobTo;
+        $query = User_Profile::with('reguser')->whereHas( 'reguser',function($q) use ($search_gender,$dobFrom,$dobTo){
+           $q->where('gender', $search_gender)
+           ->where('deactivate_status','0')
+           ->where('email_key',null)
+           ->where('dob','>=',$dobFrom)
+           ->where('dob','<=',$dobTo);
+        })
+          ->where('height','>=',$desired->height_from)
+          ->where('height','<=',$desired->height_to)
+         ;
+         // dd($desired->age_from);
+        
+      
+        if($desired->religion != 'any'){
+          $r = explode(',',$desired->religion);
+         $query->whereIn('religion',$r);
+        }
 
+        if($desired->marital_status != 'any'){
+          $r = explode(',',$desired->marital_status);
+         $query->whereIn('marital_status',$r);
+        }
+        if($desired->caste != 'any'){
+          $r = explode(',',$desired->caste);
+         $query->whereIn('caste',$r);
+        }
 
-    foreach($matches as $match)
-     {
+         dd($query->get());
+//Ending
+
         $caste=$match->caste;
         $state=$match->state;
         $religion=$match->religion;
-     }
+  
 
 
       if($id)

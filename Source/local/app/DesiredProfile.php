@@ -8,6 +8,5 @@ class DesiredProfile extends Model
 {
     //
     protected $table="desired_profiles";
-
-
+    protected $fillable = ['user_id'];
 }

@@ -62,14 +62,14 @@
             
                                $.ajax({
                                type:'POST',
-                               url: "{{ url('user/update-basicdetailsdp') }}",
+                               url: "{{ url('user/update-basicdetails-dpp') }}",
                                data: value,
                                success:function (update_basicdetails){
                                    $(".loader_cls").hide();
                                console.log("update_basicdetails");
       
                                          if(update_basicdetails==1){
-                                                   window.location="{{ url('user/profileview') }}";
+                                                   window.location="{{ url('user/dpp') }}";
                                                    //alert("Successfully Updated");
                                                 
                                                    location.reload();													 

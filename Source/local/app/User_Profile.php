@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\User_Reg;
-class Match_User extends Model
+class User_Profile extends Model
 {
     //
     protected $table = 'user_profile';
@@ -13,6 +13,14 @@ class Match_User extends Model
 
    public function reguser(){
        return $this->belongsTo('\App\User_Reg','user_id');
+   }
+
+   public function desiredprofile(){
+   		return $this->hasOne('\App\DesiredProfile','user_id');
+   }
+
+   public function annualincome(){
+   	return $this->hasOne('\App\AnnualIncome','annual_income','id')
    }
         
 }

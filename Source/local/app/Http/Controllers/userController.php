@@ -1810,7 +1810,7 @@ $intrstd_ppl_notification=\DB::table('notification')
           $profile_strength=with(new profilestrength)->profilestrength($id);
 
           $desired_profiles = \DB::table('desired_profiles')->where(['user_id'=>$id])->get();
-dd($desired_profiles);
+
      return View::make('frontend.dpp',array('users'=>$query,'results'=>$header_results,'recommendation'=>$daily_recommendation,'profile_str'=>$profile_strength,'desired_profile'=>$desired_profiles));
          }
          else
@@ -1880,29 +1880,18 @@ dd($desired_profiles);
             }
         }
 
-         public function postUpdateBasicdetailsdp()
+         public function postUpdateBasicdetailsDpp()
         { 
 
         $my_data=Input::all();
-        $new_data['body_type'] =$my_data['body_type'];
-       $new_data['complexion'] =$my_data['complexion'];
-       $new_data['height'] =$my_data['height'];
-       $new_data['physical_status'] =$my_data['physical_status'];
-       $new_data['weight'] =$my_data['weight'];
-       $new_data['marital_status'] =$my_data['marital_status'];
-       $new_data['eating_habits'] =$my_data['eating_habits'];
-       $new_data['eating_habits'] =$my_data['eating_habits'];
-       $new_data['drinking_habit'] =$my_data['drinking_habit'];
-       $new_data['smoking_habits'] =$my_data['smoking_habits'];
-       $new_data['name'] =$my_data['name'];
-       
+        
+       $new_data['height_from'] =$my_data['height_from'];
+       $new_data['height_to'] =$my_data['height_to'];
+        $new_data['age_from'] =$my_data['age_from'];
+       $new_data['age_to'] =$my_data['age_to'];
+        $new_data['marital_status'] =  $this->set_multiple_value($my_data,"marital_status");
+        $new_data['country'] =  $this->set_multiple_value($my_data,"country_livingin");
        $id= \Session::get('id');
-           $my_data['user_id'] = $id;
-           $age_to = $my_data['age_to'];
-           $new_data['age_to'] = $age_to;
-
-
-
 
            $update_basicdetails=\DB::table('desired_profiles')
                                  ->where('user_id', $id)
