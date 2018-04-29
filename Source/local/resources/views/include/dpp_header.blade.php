@@ -116,15 +116,13 @@
 			<li>
                 <div class="bs-example">
                 <div class="dropdown">
-				<?php 
-            $count_value=$results['count_value'];
-            
-                    if($count_value>0) {?><span id="count-notification" class="countspan"><?php  echo $count_value; ?></span> <?php }                    ?>
+	
+                    
                     
                 <a href="#" data-toggle="dropdown"  id="notificationLink"><img src="{{asset('assets/images/noti.png')}}"/></a>
                 <ul class="dropdown-menu settingsdropdwn">
 					   
-							<?php
+			<?php
 						 $notification=\ DB::table('notification')
 						               ->join('user_profile', 'user_profile.user_id', '=', 'notification.s_id')
 						               ->where('r_id', '=', $id)
@@ -218,26 +216,7 @@ if(count($notification)>0)
                             
                             
                             
-                            <?php
-						$reg=\DB::table('user_reg') 
-						         ->where('id','=',$id)
-                                ->get();
-					 	foreach($reg as $stat)
-						{
-							 $status=$stat->status;
-						}
-					 	    if($data1) {
-							$user = $data1[0];
-							?>
-						
-							<li class="profilepic"><a class="" href="{{ URL::to('user/profileview') }}" ><img src="{{asset($user->path)}}"/> &nbsp;&nbsp;&nbsp;<?php echo $user->name."(".$user->rand_id.")"; ?></a></li>
-							&nbsp;<?php if($status =='online') {?>
-                <img class="" src="{{asset('assets/images/chat/online.png')}}"><?php }
-				elseif($status =='busy') {?>
-                <img class="" src="{{asset('assets/images/chat/busy.png')}}"> <?php }
-				else {?><img class="" src="{{asset('assets/images/chat/offline.png')}}">
-				<?php } }?>
-					                      
+                         
 
 					   </ul>
                      </div>

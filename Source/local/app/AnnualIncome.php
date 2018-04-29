@@ -10,5 +10,6 @@ class AnnualIncome extends Model
 	
 	protected $fillable = ['from','to'];
     //
+   protected $table = 'annual_incomes';
 
 }

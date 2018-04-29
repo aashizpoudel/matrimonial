@@ -27,8 +27,8 @@ class CreateDesiredProfilesTable extends Migration
             $table->string('education')->default('any');
             $table->string('occupation')->default('any');
             $table->string('employed_in')->default('any');
-            $table->integer('annual_income_from')->default(0);
-            $table->integer('annual_income_to')->default(25000);
+            $table->string('annual_income')->default('any');
+          
 
             $table->timestamps();
 

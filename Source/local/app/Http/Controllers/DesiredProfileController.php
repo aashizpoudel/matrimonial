@@ -55,6 +55,7 @@ class DesiredProfileController extends Controller
     public function store(Request $request)
     {
         //
+        
     }
 
     /**
@@ -130,17 +131,17 @@ class DesiredProfileController extends Controller
         
         $dobFrom = (new Carbon())->subYears($desired->age_to)->toDateString() ;
         $dobTo = (new Carbon())->subYears($desired->age_from)->toDateString() ;
-        echo $dobFrom ;
-        echo $dobTo;
+       
         $query = User_Profile::with('reguser')->whereHas( 'reguser',function($q) use ($search_gender,$dobFrom,$dobTo){
            $q->where('gender', $search_gender)
            ->where('deactivate_status','0')
            ->where('email_key',null)
-           ->where('dob','>=',$dobFrom)
-           ->where('dob','<=',$dobTo);
-        })
-          ->where('height','>=',$desired->height_from)
-          ->where('height','<=',$desired->height_to)
+           ->Where('dob','>=',$dobFrom)
+           ->Where('dob','<=',$dobTo);
+          })
+          ->orWhere('height','>=',$desired->height_from)
+          ->orWhere('height','<=',$desired->height_to)
+          
          ;
          // dd($desired->age_from);
         
@@ -158,117 +159,17 @@ class DesiredProfileController extends Controller
           $r = explode(',',$desired->caste);
          $query->whereIn('caste',$r);
         }
-
-         dd($query->get());
-//Ending
-
-        $caste=$match->caste;
-        $state=$match->state;
-        $religion=$match->religion;
-  
-
-
-      if($id)
-      {
-        if($cookie){
-        $sess1= \Session::put('id',$cookie);
-      }
-
-
-        $user_gender=trim($gender);
-        $user_religion=trim($religion);
-        $user_caste=trim($caste);
-        $user_state=trim($state);
-
-
-        $minage=18;
-        $maxage=41;
-
-    if($user_gender=='male')
-    {
-      $search_gender="female";
-    }
-    else
-    {
-      $search_gender="male";
-    }
-
-
-
-
-    $query = \DB::table('user_profile')
-          ->leftJoin('user_reg', 'user_reg.id', '=', 'user_profile.user_id')
-          ->leftJoin('religion','religion.religion_id','=','user_profile.religion')
-          ->leftJoin('caste','caste.caste_id','=','user_profile.caste')
-          ->leftJoin('state','state.state_id','=','user_profile.state')
-          ->leftJoin('district','district.district_id','=','user_profile.district')
-          ->leftJoin('education','education.education_id','=','user_profile.education')
-          ->leftJoin('occupation','occupation.occupation_id','=','user_profile.occupation')
-          ->where('user_reg.email_key','=',null)
-          ->where('user_reg.deactivate_status','=','0')
-          ->where('user_profile.profile_strength','>','59')
-          ->where('user_reg.gender','=',$search_gender);
-
-
-
-
-
-          //show matching profile of login user
-
-    if(!isset($_POST['religion']) and !isset($_POST['caste']) and !isset($_POST['state']) and !isset($search_filter['dob']) and !isset($search_filter['education']) and !isset($search_filter['district']) and !isset($search_filter['occupation']) and !isset($search_filter['other_religion']) and !isset($search_filter['other_caste']))
-    {
-
-          $maxdate = date('Y-m-d', strtotime($minage . ' years ago'));
-          $mindate = date('Y-m-d', strtotime($maxage . ' years ago'));
-
-          $query = $query->where('user_profile.religion',$user_religion);
-          $query = $query->where('user_profile.caste','=',$user_caste);
-          $query = $query->where('user_profile.state','=',$user_state);
-          $query = $query->where('user_reg.gender','=',$search_gender);
-          $query = $query->whereBetween('user_reg.dob',[$mindate,$maxdate]);
-
-    }
-    //var_dump($query->get());
-        //exit();
-    //filter section
-     foreach($_POST as $key=>$val)
-      {
-       if($key == 'other_caste') {
-      $query = $query->orWhere('user_profile.caste','=','');
-                 }
-    elseif ($key == 'other_religion') {
-      $query = $query->orWhere('user_profile.religion','=','');
-
-                 }
-    elseif($key == 'dob') {
-      $minage=min($_POST['dob']);
-      $maxage=max($_POST['dob'])+5;
-      $maxdate = date('Y-m-d', strtotime($minage . ' years ago'));
-      $mindate = date('Y-m-d', strtotime($maxage . ' years ago'));
-
-      $query = $query->whereBetween('user_reg.dob',[$mindate,$maxdate]);
-                 }
-     else {
-       $query = $query->whereIn($key, $val);
-          }
-
+          if($desired->annual_income != 'any'){
+          $r = explode(',',$desired->annual_income);
+         $query->whereIn('annual_income',$r);
         }
-
-        
-
-         $results= with(new notification)->headersearch();
-         $results['users'] = $query->get();
+      $data = $query->paginate(10);
+        echo $query->toSql() ;
          
-         $results['chat_users'] = $this->userregvalues();
-
-
-     return view::make('frontend.desired_profiles',array('results'=>$results));
-    }
-    else
-    {
-       return redirect('user/error-page');
-    }
-
+     return view('frontend.desired_profiles',compact('data'));
+    
+  
+}
   
 
 
@@ -346,6 +247,6 @@ function postUser(Request $request) {
 
         }
 }
+ 
 
 
-}
